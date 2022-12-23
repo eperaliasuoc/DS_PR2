@@ -11,7 +11,7 @@ public class OrganizingEntity {
     private List<SportEvent> events;
 
     public OrganizingEntity(String organizationId, String name, String description) {
-        this.organizationId = organizationId;
+        this.organizationId = Integer.parseInt(organizationId);
         this.name = name;
         this.description = description;
         events = new LinkedList<>();
