@@ -86,52 +86,144 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public File updateFile(Status status, LocalDate date, String description) throws NoFilesException {
-        return null;
+        File file = files.poll();
+        if (file  == null) {
+            throw new NoFilesException();
+        }
+
+        file.update(status, date, description);
+        if (file.isEnabled()) {
+            SportEvent sportEvent = file.newSportEvent();
+            sportEvents.put(sportEvent.getEventId(), sportEvent);
+        }
+        else {
+            rejectedFiles++;
+        }
+
+        return file;
     }
 
     @Override
     public void signUpEvent(String playerId, String eventId) throws PlayerNotFoundException, SportEventNotFoundException, LimitExceededException {
+        Player player = getPlayer(playerId);
+        if (player == null) {
+            throw new PlayerNotFoundException();
+        }
 
+        SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+
+        player.addEvent(sportEvent);
+        if (!sportEvent.isFull()) {
+            sportEvent.addEnrollment(player);
+        }
+        else {
+            sportEvent.addEnrollmentAsSubstitute(player);
+            throw new LimitExceededException();
+        }
+        updateMostActivePlayer(player);
+    }
+
+    private void updateMostActivePlayer(Player player) {
+        if (mostActivePlayer == null) {
+            mostActivePlayer = player;
+        }
+        else if (player.numSportEvents() > mostActivePlayer.numSportEvents()) {
+            mostActivePlayer = player;
+        }
     }
 
     @Override
     public double getRejectedFiles() {
-        return 0;
+        return (double) rejectedFiles / totalFiles;
     }
 
     @Override
     public Iterator<SportEvent> getSportEventsByOrganizingEntity(String organizationId) throws NoSportEventsException {
-        return null;
+        OrganizingEntity organizingEntity = getOrganizingEntity(organizationId);
+
+        if (organizingEntity==null || !organizingEntity.hasActivities()) {
+            throw new NoSportEventsException();
+        }
+        return organizingEntity.sportEvents();
     }
 
     @Override
     public Iterator<SportEvent> getAllEvents() throws NoSportEventsException {
-        return null;
+        Iterator<SportEvent> it = sportEvents.values();
+        if (!it.hasNext()) throw new NoSportEventsException();
+        return it;
     }
 
     @Override
     public Iterator<SportEvent> getEventsByPlayer(String playerId) throws NoSportEventsException {
-        return null;
+        Player player = getPlayer(playerId);
+        if (player==null || !player.hasEvents()) {
+            throw new NoSportEventsException();
+        }
+        Iterator<SportEvent> it = player.getEvents();
+
+        return it;
     }
 
     @Override
     public void addRating(String playerId, String eventId, Rating rating, String message) throws SportEventNotFoundException, PlayerNotFoundException, PlayerNotInSportEventException {
+        SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
 
+        Player player = getPlayer(playerId);
+        if (player == null) {
+            throw new PlayerNotFoundException();
+        }
+
+        if (!player.isInSportEvent(eventId)) {
+            throw new PlayerNotInSportEventException();
+        }
+
+        sportEvent.addRating(rating, message, player);
+        updateBestSportEvent(sportEvent);
     }
+
+    private void updateBestSportEvent(SportEvent sportEvent) {
+        bestSportEvent.delete(sportEvent);
+        bestSportEvent.update(sportEvent);
+    }
+
 
     @Override
     public Iterator<uoc.ds.pr.model.Rating> getRatingsByEvent(String eventId) throws SportEventNotFoundException, NoRatingsException {
-        return null;
+        SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent  == null) {
+            throw new SportEventNotFoundException();
+        }
+
+        if (!sportEvent.hasRatings()) {
+            throw new NoRatingsException();
+        }
+
+        return sportEvent.ratings();
     }
 
     @Override
     public Player mostActivePlayer() throws PlayerNotFoundException {
-        return null;
+        if (mostActivePlayer == null) {
+            throw new PlayerNotFoundException();
+        }
+
+        return mostActivePlayer;
     }
 
     @Override
     public SportEvent bestSportEvent() throws SportEventNotFoundException {
-        return null;
+        if (bestSportEvent.size() == 0) {
+            throw new SportEventNotFoundException();
+        }
+
+        return bestSportEvent.elementAt(0);
     }
 
     @Override
@@ -221,52 +313,65 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numPlayers() {
-        return 0;
+        return numPlayers;
     }
 
     @Override
     public int numOrganizingEntities() {
-        return 0;
+        return numOrganizingEntities;
     }
 
     @Override
     public int numFiles() {
-        return 0;
+        return totalFiles;
     }
 
     @Override
     public int numRejectedFiles() {
-        return 0;
+        return rejectedFiles;
     }
 
     @Override
     public int numPendingFiles() {
-        return 0;
+        return files.size();
     }
 
     @Override
     public int numSportEvents() {
-        return 0;
+        return sportEvents.size();
     }
 
     @Override
     public int numSportEventsByPlayer(String playerId) {
-        return 0;
+        Player player = getPlayer(playerId);
+        return (player!=null?player.numEvents():0);
     }
 
     @Override
     public int numPlayersBySportEvent(String sportEventId) {
-        return 0;
+        SportEvent sportEvent = getSportEvent(sportEventId);
+        return (sportEvent!=null?sportEvent.numPlayers(): 0);
     }
 
     @Override
     public int numSportEventsByOrganizingEntity(String orgId) {
-        return 0;
+        OrganizingEntity organization = null;
+        if (Integer.parseInt(orgId)<=this.organizingEntities.length) {
+            organization = getOrganizingEntity(orgId);
+        }
+
+        return (organization!=null? organization.numEvents():0);
     }
 
     @Override
     public int numSubstitutesBySportEvent(String sportEventId) {
-        return 0;
+        SportEvent sportEvent = getSportEvent(sportEventId);
+
+        return (sportEvent!=null?sportEvent.getNumSubstitutes():0);
+    }
+
+    public SportEvent getSportEvent(String eventId) {
+        return sportEvents.get(eventId);
     }
 
     @Override
@@ -278,11 +383,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
                 return u;
             }
         }
-        return null;
-    }
-
-    @Override
-    public SportEvent getSportEvent(String eventId) {
         return null;
     }
 
@@ -305,7 +405,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public File currentFile() {
-        return null;
+        return (files.size() > 0 ? files.peek() : null);
     }
 
     @Override
