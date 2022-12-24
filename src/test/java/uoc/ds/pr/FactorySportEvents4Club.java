@@ -1,6 +1,9 @@
 package uoc.ds.pr;
 
 import static uoc.ds.pr.util.DateUtils.createLocalDate;
+import uoc.ds.pr.exceptions.*;
+import uoc.ds.pr.model.*;
+import uoc.ds.pr.util.ResourceUtil;
 
 import org.junit.Assert;
 
