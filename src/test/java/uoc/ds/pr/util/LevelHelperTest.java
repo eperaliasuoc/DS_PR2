@@ -3,6 +3,8 @@ package uoc.ds.pr.util;
 import org.junit.Assert;
 import org.junit.Test;
 import uoc.ds.pr.SportEvents4Club;
+import uoc.ds.pr.util.*;
+import uoc.ds.pr.model.*;
 
 public class LevelHelperTest {
 
