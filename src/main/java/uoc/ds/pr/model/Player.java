@@ -16,11 +16,12 @@ public class Player {
     private int numRatings;
 
 	public Player(String idUser, String name, String surname, LocalDate birthday) {
-        this.setId(idUser);
-        this.setName(name);
-        this.setSurname(surname);
-        this.setBirthday(birthday);
-        this.events = new LinkedList<>();
+        this.id = idUser;
+        this.name = name;
+        this.surname = surname;
+        this.birthday = birthday;
+        events = new LinkedList<>();
+        numRatings = 0;
     }
 
     public void setName(String name) {
@@ -61,6 +62,7 @@ public class Player {
 
     public void addEvent(SportEvent sportEvent) {
         events.insertEnd(sportEvent);
+        //SportEvents4Club.Level level = sportEvent.ge
     }
 
     public int numEvents() {
@@ -90,19 +92,19 @@ public class Player {
         return this.events.size()>0;
     }
 
-    public SportEvents4Club.Level getLevel(String idUser) {
-        return LevelHelper.getLevel(idUser);
+    public SportEvents4Club.Level getLevel(Integer rating) {
+        return LevelHelper.getLevel(rating);
     }
 
-    public boolean hasNumRatings(int num) {
-        return numRatings>=num;
-    }
+   // public boolean hasNumRatings(int num) {
+   //     return numRatings>=num;
+   // }
 
     public void incNumRatings() {
         numRatings++;
     }
 
-    public boolean hasLessThanNumRatings(int num) {
-        return numRatings<=num;
-    }
+    //public boolean hasLessThanNumRatings(int num) {
+    //    return numRatings<=num;
+    //}
 }

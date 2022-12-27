@@ -35,8 +35,6 @@ public class DictionaryOrderedVector<K,V> extends DictionaryArrayImpl<K,V> imple
         // add Key-Value
         int i = n - 1;
 
-
-
         KeyValue kv;
         KeyValue last = dictionary[n - 1];
 

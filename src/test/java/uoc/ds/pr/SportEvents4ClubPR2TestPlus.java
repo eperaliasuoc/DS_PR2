@@ -10,7 +10,7 @@ import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
 
 public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
-
+/*
 
     @Before
     public void setUp() throws Exception {
@@ -75,7 +75,9 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(7): {2}
      * followings(10): {5}
      * followings(11): {5}
-     */
+    */
+
+    /*
     @Test
     public void addFollowerTest() throws DSException {
         // GIVEN:
@@ -100,7 +102,7 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
 
     }
 
-    /**
+    /*
      * followers(1): {2, 3, 4, 5}
      * followers(2): {1, 3, 6, 7}
      * followers(3): {1, 2, 4, 5}
@@ -116,6 +118,8 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(10): {5}
      * followings(11): {5}
      */
+
+    /*
     @Test
     public void getFollowersTest() throws DSException {
         initialState();
@@ -162,6 +166,8 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(10): {5}
      * followings(11): {5}
      */
+
+    /*
     @Test
     public void getFollowingsTest() throws DSException {
         initialState();
@@ -232,6 +238,8 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(10): {5}
      * followings(11): {5}
      */
+
+    /*
     @Test
     public void recommendationTest() throws DSException {
         initialState();
@@ -279,6 +287,8 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(10): {5}
      * followings(11): {5}
      */
+
+    /*
     @Test
     public void getPostsTest() throws DSException {
         initialState();
@@ -310,5 +320,5 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
         Assert.assertEquals("{'player': 'idPlayer3', 'sportEvent': 'EV-1101', 'rating': 'FOUR', 'action': 'rating'}",
                 it.next().message());
     }
-
+*/
 }

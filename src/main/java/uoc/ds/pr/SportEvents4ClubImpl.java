@@ -2,60 +2,78 @@ package uoc.ds.pr;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Hashtable;
 
-import edu.uoc.ds.adt.nonlinear.Dictionary;
-import edu.uoc.ds.adt.sequential.Queue;
-import edu.uoc.ds.adt.sequential.QueueArrayImpl;
+import edu.uoc.ds.adt.nonlinear.*;
+import edu.uoc.ds.adt.sequential.*;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
 import uoc.ds.pr.util.DictionaryOrderedVector;
 import uoc.ds.pr.util.OrderedVector;
 
+
 public class SportEvents4ClubImpl implements SportEvents4Club {
-    private Player[] players;
+    //private Player[] players;
+    private Dictionary<String, Player> players;
     private int numPlayers;
 
-    private OrganizingEntity[] organizingEntities;
+    //private OrganizingEntity[] organizingEntities;
+    private HashTable<String, OrganizingEntity> organizingEntities;
     private int numOrganizingEntities;
 
-    private Queue<File> files;
+    //private Queue<File> files;
+    private PriorityQueue<File> files;
+    //private Dictionary<String, SportEvent> sportEvents;
     private Dictionary<String, SportEvent> sportEvents;
 
     private int totalFiles;
     private int rejectedFiles;
 
     private Player mostActivePlayer;
+    private SportEvent BestSportEvent;
     private OrderedVector<SportEvent> bestSportEvent;
+    private Role[] roles;
+    private OrderedVector<OrganizingEntity> best5OrganizingEntity;
+    private OrderedVector<SportEvent> best10SportEvent;
+    private HashTable<String, Worker> workers;
+
 
     public SportEvents4ClubImpl() {
-        players = new Player[MAX_NUM_PLAYER];
+        //players = new Player[MAX_NUM_PLAYER];
+        players = new DictionaryAVLImpl<String, Player>();
         numPlayers = 0;
-        organizingEntities = new OrganizingEntity[MAX_NUM_ORGANIZING_ENTITIES];
+        //organizingEntities = new OrganizingEntity[MAX_NUM_ORGANIZING_ENTITIES];
+        organizingEntities = new HashTable<String, OrganizingEntity>();
         numOrganizingEntities = 0;
-        files = new QueueArrayImpl<>();
-        sportEvents = new DictionaryOrderedVector<String, SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_K);
+        //files = new QueueArrayImpl<>();
+        files = new PriorityQueue<File>(File.CMP);
+        //sportEvents = new DictionaryOrderedVector<String, SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_K);
+        sportEvents = new DictionaryAVLImpl<String, SportEvent>();
         totalFiles = 0;
         rejectedFiles = 0;
         mostActivePlayer = null;
+        bestSportEvent = null;
         bestSportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_V);
+        workers = new HashTable<String, Worker>();
+        roles = new Role[R];
+        best10SportEvent = new OrderedVector<SportEvent>(BEST_10_SPORTEVENTS+EXTRA, SportEvent.CMP_V);
+        best5OrganizingEntity = new OrderedVector<OrganizingEntity>(BEST_OrganizingEntities, OrganizingEntity.COMP_RATING);
     }
 
     @Override
     public void addPlayer(String id, String name, String surname, LocalDate dateOfBirth) {
-        Player u = getPlayer(id);
-        if (u != null) {
-            u.setName(name);
-            u.setSurname(surname);
-            u.setBirthday(dateOfBirth);
-        } else {
-            u = new Player(id, name, surname, dateOfBirth);
-            addUser(u);
-        }
-    }
+        Player player = players.get(id);
 
-    public void addUser(Player player) {
-        players[numPlayers++] = player;
+        if (player == null) {
+            player = new Player(id, name, surname, dateOfBirth);
+            players.put(player.getId(), player);
+            numPlayers++;
+        } else {
+            player.setName(name);
+            player.setSurname(surname);
+            player.setBirthday(dateOfBirth);
+        }
     }
 
     @Override
@@ -66,7 +84,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             organizingEntity.setDescription(description);
         } else {
             organizingEntity = new OrganizingEntity(id, name, description);
-            organizingEntities[Integer.parseInt(id)]= organizingEntity;
+            organizingEntities.put(id, organizingEntity);
             numOrganizingEntities++;
         }
     }
@@ -376,19 +394,13 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Player getPlayer(String playerId) {
-        for (Player u : players) {
-            if (u == null) {
-                return null;
-            } else if (u.is(playerId)){
-                return u;
-            }
-        }
-        return null;
+        return players.get(playerId)
     }
 
     @Override
     public OrganizingEntity getOrganizingEntity(String id) {
-        return organizingEntities[Integer.parseInt(id)];
+        OrganizingEntity organizingEntity = organizingEntities[Integer.parseInt(id)];
+        return organizingEntity;
     }
     public void addFile(String id, String eventId, int orgId, String description,
                         Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) throws OrganizingEntityNotFoundException {
