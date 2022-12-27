@@ -90,15 +90,13 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     }
 
     public void addFile(String id, String eventId, String orgId, String description, Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) throws OrganizingEntityNotFoundException {
-        if (Integer.parseInt(orgId) >= organizingEntities.length) {
-            throw new OrganizingEntityNotFoundException();
-        }
-        OrganizingEntity organization = getOrganizingEntity(orgId);
-        if (organization == null) {
+        OrganizingEntity organizingEntity = getOrganizingEntity(orgId);
+        if (organizingEntity == null) {
             throw new OrganizingEntityNotFoundException();
         }
 
-        files.add(new File(id, eventId, description, type, startDate, endDate, resources, max, organization));
+        File file = new File(id, eventId, orgId, description, type, resources, max, startDate, endDate);
+        files.add(file);
         totalFiles++;
     }
 
@@ -394,15 +392,14 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Player getPlayer(String playerId) {
-        return players.get(playerId)
+        return players.get(playerId);
     }
 
     @Override
     public OrganizingEntity getOrganizingEntity(String id) {
-        OrganizingEntity organizingEntity = organizingEntities[Integer.parseInt(id)];
-        return organizingEntity;
+        return organizingEntities.get(id);
     }
-    public void addFile(String id, String eventId, int orgId, String description,
+    /*public void addFile(String id, String eventId, int orgId, String description,
                         Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) throws OrganizingEntityNotFoundException {
         if (orgId >= organizingEntities.length) {
             throw new OrganizingEntityNotFoundException();
@@ -413,7 +410,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         }
 
         files.add(new File(id, eventId, description, type, startDate, endDate, resources, max, organization));
-        totalFiles++;    }
+        totalFiles++;    }*/
 
     @Override
     public File currentFile() {

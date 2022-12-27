@@ -27,12 +27,10 @@ public class SportEvent implements Comparable<SportEvent> {
     private File file;
 
     private List<Rating> ratings;
+    private Queue<Enrollment> enrollments;
     private double sumRating;
 
     private int numSubstitutes;
-
-    private Queue<Enrollment> enrollments;
-
 
     public SportEvent(String eventId, String description, SportEvents4Club.Type type,
                       LocalDate startDate, LocalDate endDate, int max, File file) {

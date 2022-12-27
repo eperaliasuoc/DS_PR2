@@ -17,13 +17,14 @@ public class File {
     private String descriptionStatus;
     private int num;
     private SportEvents4Club.Status status;
-    private OrganizingEntity organization;
+    //private OrganizingEntity organization;
+    private String organization;
 
+   // public File(String id, String eventId, String orgId, String description, SportEvents4Club.Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) {
 
-    public File(String recordId, String actId, String description, SportEvents4Club.Type type, LocalDate startDate, LocalDate endDate,
-                byte resources, int num, OrganizingEntity organization) {
-        this.recordId = recordId;
-        this.eventId = actId;
+    public File(String id, String eventId, String organization, String description, SportEvents4Club.Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) {
+        this.recordId = id;
+        this.eventId = eventId;
         this.description = description;
         this.type = type;
         this.startDate = startDate;
