@@ -1,11 +1,15 @@
 package uoc.ds.pr;
 
+import static uoc.ds.pr.SportEvents4Club.MAX_NUM_ORGANIZING_ENTITIES;
 import static uoc.ds.pr.util.DateUtils.createLocalDate;
-import uoc.ds.pr.exceptions.*;
-import uoc.ds.pr.model.*;
-import uoc.ds.pr.util.ResourceUtil;
 
 import org.junit.Assert;
+import uoc.ds.pr.exceptions.NoRatingsException;
+import uoc.ds.pr.exceptions.NoSportEventsException;
+import uoc.ds.pr.exceptions.OrganizingEntityNotFoundException;
+import uoc.ds.pr.exceptions.PlayerNotFoundException;
+import uoc.ds.pr.model.File;
+import uoc.ds.pr.util.ResourceUtil;
 
 
 public class FactorySportEvents4Club {
@@ -91,30 +95,43 @@ public class FactorySportEvents4Club {
                 50, createLocalDate("25-11-2022"), createLocalDate("30-02-2023"));
 
 
-        File fileF001 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
+        File fileF003 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
                 createLocalDate("12-10-2022"), "OK: XXX 0");
-        Assert.assertEquals("F-001", fileF001.getFileId());
+        Assert.assertEquals("F-003", fileF003.getFileId());
+        Assert.assertEquals( createLocalDate("22-11-2022"), fileF003.getStartDate());
+        Assert.assertEquals(SportEvents4Club.Type.XLARGE, fileF003.getType());
 
-
-        File fileF004 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
-                createLocalDate("12-10-2022"), "OK: XXX 1");
-        Assert.assertEquals("F-004", fileF004.getFileId());
 
         File fileF002 = sportEvents4Club.updateFile(SportEvents4Club.Status.DISABLED,
-                createLocalDate("12-10-2022"), "KO: XXX");
+                createLocalDate("12-10-2022"), "OK: XXX 1");
         Assert.assertEquals("F-002", fileF002.getFileId());
+        Assert.assertEquals( createLocalDate("22-11-2022"), fileF002.getStartDate());
+        Assert.assertEquals(SportEvents4Club.Type.MEDIUM, fileF002.getType());
 
-        File fileF003 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
+        File fileF001 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
+                createLocalDate("12-10-2022"), "KO: XXX");
+        Assert.assertEquals("F-001", fileF001.getFileId());
+        Assert.assertEquals( createLocalDate("22-11-2022"), fileF001.getStartDate());
+        Assert.assertEquals(SportEvents4Club.Type.MICRO, fileF001.getType());
+
+        File fileF004 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
                 createLocalDate("12-10-2022"), "OK: XXX 2");
-        Assert.assertEquals("F-003", fileF003.getFileId());
+        Assert.assertEquals("F-004", fileF004.getFileId());
+        Assert.assertEquals( createLocalDate("22-11-2022"), fileF004.getStartDate());
+        Assert.assertEquals(SportEvents4Club.Type.MICRO, fileF004.getType());
 
         File fileF005 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
                 createLocalDate("15-10-2022"), "OK: XXX 5");
         Assert.assertEquals("F-005", fileF005.getFileId());
+        Assert.assertEquals( createLocalDate("23-11-2022"), fileF005.getStartDate());
+        Assert.assertEquals(SportEvents4Club.Type.SMALL, fileF005.getType());
 
         File fileF006 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
                 createLocalDate("16-10-2022"), "OK: XXX 6");
         Assert.assertEquals("F-006", fileF006.getFileId());
+        Assert.assertEquals( createLocalDate("22-11-2022"), fileF001.getStartDate());
+        Assert.assertEquals(SportEvents4Club.Type.SMALL, fileF005.getType());
+
 
         byte resources7 = ResourceUtil.getFlag(SportEvents4Club.FLAG_ALL_OPTS);
         sportEvents4Club.addFile("F-007", "EV-1107", "ORG-8", "description EV-1107",

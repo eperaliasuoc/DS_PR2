@@ -95,7 +95,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new OrganizingEntityNotFoundException();
         }
 
-        File file = new File(id, eventId, orgId, description, type, resources, max, startDate, endDate);
+        File file = new File(id, eventId, organizingEntity, description, type, resources, max, startDate, endDate);
         files.add(file);
         totalFiles++;
     }

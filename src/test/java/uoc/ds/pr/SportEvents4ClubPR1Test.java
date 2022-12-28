@@ -1,5 +1,6 @@
 package uoc.ds.pr;
 
+import edu.uoc.ds.exceptions.InvalidPositionException;
 import edu.uoc.ds.traversal.Iterator;
 import org.junit.After;
 import org.junit.Assert;
@@ -7,8 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uoc.ds.pr.exceptions.*;
-import uoc.ds.pr.model.*;
+import uoc.ds.pr.model.Player;
+import uoc.ds.pr.model.Rating;
+import uoc.ds.pr.model.File;
+import uoc.ds.pr.model.SportEvent;
 import uoc.ds.pr.util.ResourceUtil;
+
+import static uoc.ds.pr.SportEvents4Club.MAX_NUM_ORGANIZING_ENTITIES;
 import static uoc.ds.pr.util.DateUtils.createLocalDate;
 
 public class SportEvents4ClubPR1Test {
@@ -192,7 +198,6 @@ public class SportEvents4ClubPR1Test {
         Assert.assertEquals(7, this.sportEvents4Club.numPlayersBySportEvent("EV-1104"));
     }
 
-    /*
     @Test
     public void getEventsByOrganizingEntityTest() throws DSException {
         // GIVEN:
@@ -203,10 +208,10 @@ public class SportEvents4ClubPR1Test {
 
         Iterator<SportEvent> it = this.sportEvents4Club.getSportEventsByOrganizingEntity("ORG-3");
         SportEvent sportEvent1 = it.next();
-        Assert.assertEquals("EV-1104", sportEvent1.getEventId());
+        Assert.assertEquals("EV-1103", sportEvent1.getEventId());
 
         SportEvent sportEvent2 = it.next();
-        Assert.assertEquals("EV-1103", sportEvent2.getEventId());
+        Assert.assertEquals("EV-1104", sportEvent2.getEventId());
 
         SportEvent sportEvent3 = it.next();
         Assert.assertEquals("EV-1105", sportEvent3.getEventId());
@@ -380,6 +385,4 @@ public class SportEvents4ClubPR1Test {
         Assert.assertEquals(SportEvents4Club.Rating.FIVE, rating.rating());
         Assert.assertEquals("idPlayer1", rating.getPlayer().getId());
     }
-
-     */
 }

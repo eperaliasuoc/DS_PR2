@@ -3,9 +3,11 @@ package uoc.ds.pr.model;
 import uoc.ds.pr.SportEvents4Club;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
-public class File {
+public class File implements Comparable<File> {
 
+    public static final Comparator<File> CMP = (File f1, File f2)->f1.compareTo(f2);
     private final SportEvents4Club.Type type;
     private String eventId;
     private String description;
@@ -17,12 +19,10 @@ public class File {
     private String descriptionStatus;
     private int num;
     private SportEvents4Club.Status status;
-    //private OrganizingEntity organization;
-    private String organization;
+    private OrganizingEntity organizingEntity;
+    //private String organization;
 
-   // public File(String id, String eventId, String orgId, String description, SportEvents4Club.Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) {
-
-    public File(String id, String eventId, String organization, String description, SportEvents4Club.Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) {
+    public File(String id, String eventId, OrganizingEntity organization, String description, SportEvents4Club.Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) {
         this.recordId = id;
         this.eventId = eventId;
         this.description = description;
@@ -32,7 +32,7 @@ public class File {
         this.endDate = endDate;
         this.num = num;
         this.status = SportEvents4Club.Status.PENDING;
-        this.organization = organization;
+        this.organizingEntity = organization;
     }
 
 
@@ -103,11 +103,23 @@ public class File {
     }
 
     public SportEvent newSportEvent() {
-
-        SportEvent sportEvent = new SportEvent(this.eventId, this.description, this.type,
-                this.startDate, this.endDate, this.num, this);
-        this.organization.addEvent(sportEvent);
+        SportEvent sportEvent = new SportEvent(this.eventId, this.description, this.type, this.startDate, this.endDate, this.num, this);
+        organizingEntity.addEvent(sportEvent);
 
         return sportEvent;
     }
+
+    @Override
+    public int compareTo(File f) {
+        int result = this.startDate.compareTo(f.startDate);
+        if (result == 0) {
+            result = this.type.compareTo(f.getType());
+        }
+        return result;
+    }
+
+    public SportEvents4Club.Type getType() {
+        return type;
+    }
+
 }
