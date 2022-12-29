@@ -56,9 +56,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         bestSportEvent = null;
         bestSportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_V);
         workers = new HashTable<String, Worker>();
-        roles = new Role[R];
-        best10SportEvent = new OrderedVector<SportEvent>(BEST_10_SPORTEVENTS+EXTRA, SportEvent.CMP_V);
-        best5OrganizingEntity = new OrderedVector<OrganizingEntity>(BEST_OrganizingEntities, OrganizingEntity.COMP_RATING);
+        //roles = new Role[R];
+        //best10SportEvent = new OrderedVector<SportEvent>(BEST_10_SPORTEVENTS+EXTRA, SportEvent.CMP_V);
+        //best5OrganizingEntity = new OrderedVector<OrganizingEntity>(BEST_OrganizingEntities, OrganizingEntity.COMP_RATING);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public File updateFile(Status status, LocalDate date, String description) throws NoFilesException {
         File file = files.poll();
-        if (file  == null) {
+        if (file == null) {
             throw new NoFilesException();
         }
 
@@ -372,7 +372,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public int numSportEventsByOrganizingEntity(String orgId) {
         OrganizingEntity organization = null;
-        if (Integer.parseInt(orgId)<=this.organizingEntities.length) {
+        if (Integer.parseInt(orgId)<=this.organizingEntities.size()) {
             organization = getOrganizingEntity(orgId);
         }
 

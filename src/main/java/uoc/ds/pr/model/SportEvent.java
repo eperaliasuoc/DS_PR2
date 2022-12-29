@@ -29,11 +29,9 @@ public class SportEvent implements Comparable<SportEvent> {
     private List<Rating> ratings;
     private Queue<Enrollment> enrollments;
     private double sumRating;
-
     private int numSubstitutes;
 
-    public SportEvent(String eventId, String description, SportEvents4Club.Type type,
-                      LocalDate startDate, LocalDate endDate, int max, File file) {
+    public SportEvent(String eventId, String description, SportEvents4Club.Type type, LocalDate startDate, LocalDate endDate, int max, File file) {
         setEventId(eventId);
         setDescription(description);
         setStartDate(startDate);

@@ -112,8 +112,14 @@ public class File implements Comparable<File> {
     @Override
     public int compareTo(File f) {
         int result = this.startDate.compareTo(f.startDate);
+        System.out.println("VAlor de ficha primera antes del if en compareTo= " + this.getFileId() +  this.startDate );
+        System.out.println("VAlor de ficha segunda antes del if en compareTo= " +  f.getFileId() +  f.startDate );
+        System.out.println("VAlor de result dentro del primer de fecha if en compareTo= " + result);
         if (result == 0) {
-            result = this.type.compareTo(f.getType());
+            result = this.getType().compareTo(f.getType());
+            System.out.println("VAlor de ficha primera en compareTo= " + this.getFileId() );
+            System.out.println("VAlor de ficha segunda en compareTo= " +  f.getFileId()  );
+            System.out.println("VAlor de result dentro del segundo if type en compareTo= " + result);
         }
         return result;
     }

@@ -83,7 +83,6 @@ public class FactorySportEvents4Club {
                 SportEvents4Club.Type.MICRO, resources4,
                 5, createLocalDate("22-11-2022"), createLocalDate("31-12-2022"));
 
-
         byte resources5 = ResourceUtil.getFlag(SportEvents4Club.FLAG_ALL_OPTS);
         sportEvents4Club.addFile("F-005", "EV-1105", "ORG-3", "description EV-1105",
                 SportEvents4Club.Type.SMALL, resources5,
@@ -93,14 +92,14 @@ public class FactorySportEvents4Club {
         sportEvents4Club.addFile("F-006", "EV-1106", "ORG-8", "description EV-1106",
                 SportEvents4Club.Type.SMALL, resources6,
                 50, createLocalDate("25-11-2022"), createLocalDate("30-02-2023"));
-
+        System.out.println("FILES NUM = " + sportEvents4Club.numFiles());
+        System.out.println("FILES PENDING = " + sportEvents4Club.numPendingFiles());
 
         File fileF003 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
                 createLocalDate("12-10-2022"), "OK: XXX 0");
         Assert.assertEquals("F-003", fileF003.getFileId());
         Assert.assertEquals( createLocalDate("22-11-2022"), fileF003.getStartDate());
         Assert.assertEquals(SportEvents4Club.Type.XLARGE, fileF003.getType());
-
 
         File fileF002 = sportEvents4Club.updateFile(SportEvents4Club.Status.DISABLED,
                 createLocalDate("12-10-2022"), "OK: XXX 1");
@@ -138,7 +137,7 @@ public class FactorySportEvents4Club {
                 SportEvents4Club.Type.SMALL, resources7,
                 50, createLocalDate("25-11-2022"), createLocalDate("30-02-2023"));
 
-
+/*
         sportEvents4Club.signUpEvent("idPlayer1", "EV-1101");
         sportEvents4Club.signUpEvent("idPlayer2", "EV-1103");
         sportEvents4Club.signUpEvent("idPlayer3", "EV-1101");
@@ -227,7 +226,9 @@ public class FactorySportEvents4Club {
         sportEvents4Club.addAttender("+346424343", "Pedrerol Roncero",  "EV-1101");
         sportEvents4Club.addAttender("+346232323", "Montse Guatllar",  "EV-1101");
 
-
+*/
         return sportEvents4Club;
     }
+
+
 }

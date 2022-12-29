@@ -5,23 +5,23 @@ import edu.uoc.ds.adt.sequential.List;
 import edu.uoc.ds.traversal.Iterator;
 
 public class OrganizingEntity {
-    private int organizationId;
+    private String organizationId;
     private String description;
     private String name;
-    private List<SportEvent> events;
+    private List<SportEvent> sportEventList;
 
     public OrganizingEntity(String organizationId, String name, String description) {
-        this.organizationId = Integer.parseInt(organizationId);
+        this.organizationId = organizationId;
         this.name = name;
         this.description = description;
-        events = new LinkedList<>();
+        sportEventList = new LinkedList<>();
     }
 
     public String getName() {
         return name;
     }
 
-    public int getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
@@ -29,7 +29,7 @@ public class OrganizingEntity {
         return description;
     }
 
-    public void setOrganizationId(int organizationId) {
+    public void setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
     }
 
@@ -42,22 +42,22 @@ public class OrganizingEntity {
     }
 
     public Iterator<SportEvent> activities() {
-        return events.values();
+        return sportEventList.values();
     }
 
     public void addEvent(SportEvent sportEvent) {
-        events.insertEnd(sportEvent);
+        sportEventList.insertEnd(sportEvent);
     }
 
     public int numEvents() {
-        return events.size();
+        return sportEventList.size();
     }
 
     public boolean hasActivities() {
-        return events.size() > 0;
+        return sportEventList.size() > 0;
     }
 
     public Iterator<SportEvent> sportEvents() {
-        return events.values();
+        return sportEventList.values();
     }
 }
