@@ -39,9 +39,9 @@ public class SportEvents4ClubPR1Test {
         Assert.assertEquals(15, this.sportEvents4Club.numPlayers());
         Assert.assertEquals(5, this.sportEvents4Club.numOrganizingEntities());
         Assert.assertEquals(7, this.sportEvents4Club.numFiles());
-        /*Assert.assertEquals(1, this.sportEvents4Club.numPendingFiles());
+        Assert.assertEquals(1, this.sportEvents4Club.numPendingFiles());
 
-        Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer1"));
+        /*Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer1"));
         Assert.assertEquals(3, this.sportEvents4Club.numSportEventsByPlayer("idPlayer2"));
         Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer3"));
         Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer4"));
@@ -142,7 +142,7 @@ public class SportEvents4ClubPR1Test {
                         5, createLocalDate("25-11-2022"), createLocalDate("25-12-2022")));
 
     }
-/*
+
     @Test
     public void updateFileTest() throws DSException {
 
@@ -170,7 +170,7 @@ public class SportEvents4ClubPR1Test {
         Assert.assertEquals(9, this.sportEvents4Club.numFiles() );
         Assert.assertEquals(0.25, this.sportEvents4Club.getRejectedFiles(),0.03);
     }
-
+/*
     @Test
     public void signUpEventTest() throws DSException {
         // GIVEN:

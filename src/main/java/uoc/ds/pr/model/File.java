@@ -105,6 +105,7 @@ public class File implements Comparable<File> {
     public SportEvent newSportEvent() {
         SportEvent sportEvent = new SportEvent(this.eventId, this.description, this.type, this.startDate, this.endDate, this.num, this);
         organizingEntity.addEvent(sportEvent);
+        sportEvent.setOrganizingEntity(organizingEntity);
 
         return sportEvent;
     }
@@ -112,14 +113,8 @@ public class File implements Comparable<File> {
     @Override
     public int compareTo(File f) {
         int result = this.startDate.compareTo(f.startDate);
-        System.out.println("VAlor de ficha primera antes del if en compareTo= " + this.getFileId() +  this.startDate );
-        System.out.println("VAlor de ficha segunda antes del if en compareTo= " +  f.getFileId() +  f.startDate );
-        System.out.println("VAlor de result dentro del primer de fecha if en compareTo= " + result);
         if (result == 0) {
-            result = this.getType().compareTo(f.getType());
-            System.out.println("VAlor de ficha primera en compareTo= " + this.getFileId() );
-            System.out.println("VAlor de ficha segunda en compareTo= " +  f.getFileId()  );
-            System.out.println("VAlor de result dentro del segundo if type en compareTo= " + result);
+            result = f.getType().compareTo(this.getType());
         }
         return result;
     }

@@ -1,5 +1,6 @@
 package uoc.ds.pr.model;
 
+import edu.uoc.ds.adt.nonlinear.HashTable;
 import edu.uoc.ds.adt.sequential.LinkedList;
 import edu.uoc.ds.adt.sequential.List;
 import edu.uoc.ds.adt.sequential.Queue;
@@ -23,13 +24,14 @@ public class SportEvent implements Comparable<SportEvent> {
     private LocalDate startDate;
     private LocalDate endDate;
     private int max;
-
     private File file;
-
     private List<Rating> ratings;
     private Queue<Enrollment> enrollments;
     private double sumRating;
     private int numSubstitutes;
+    private HashTable<String, Attender> attenders;
+    private List<Worker> workers;
+    private OrganizingEntity organizingEntity;
 
     public SportEvent(String eventId, String description, SportEvents4Club.Type type, LocalDate startDate, LocalDate endDate, int max, File file) {
         setEventId(eventId);
@@ -42,8 +44,13 @@ public class SportEvent implements Comparable<SportEvent> {
         this.enrollments = new QueueArrayImpl<>(MAX_NUM_ENROLLMENT);
         this.ratings = new LinkedList<>();
         numSubstitutes = 0;
+        attenders = new HashTable<String, Attender>();
+        this.workers = new LinkedList<>();
     }
 
+    public Iterator<Attender> getAttenders() {
+        return this.attenders.values();
+    }
 
     public String getEventId() {
         return eventId;
@@ -110,6 +117,7 @@ public class SportEvent implements Comparable<SportEvent> {
         Rating newRating = new Rating(rating, message, player);
         ratings.insertEnd(newRating);
         sumRating+=rating.getValue();
+        player.incNumRatings();
     }
 
     public boolean hasRatings() {
@@ -119,7 +127,6 @@ public class SportEvent implements Comparable<SportEvent> {
     public Iterator<Rating> ratings() {
         return ratings.values();
     }
-
 
     public void addEnrollment(Player player) {
         addEnrollment(player, false);
@@ -157,6 +164,14 @@ public class SportEvent implements Comparable<SportEvent> {
 
     public int getNumSubstitutes() {
         return numSubstitutes;
+    }
+
+    public OrganizingEntity getOrganization() {
+        return organizingEntity;
+    }
+
+    public void setOrganizingEntity(OrganizingEntity organization) {
+        this.organizingEntity = organization;
     }
 
 }

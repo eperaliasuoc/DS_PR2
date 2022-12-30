@@ -36,7 +36,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     private Role[] roles;
     private OrderedVector<OrganizingEntity> best5OrganizingEntity;
     private OrderedVector<SportEvent> best10SportEvent;
-    private HashTable<String, Worker> workers;
 
 
     public SportEvents4ClubImpl() {
@@ -44,7 +43,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         players = new DictionaryAVLImpl<String, Player>();
         numPlayers = 0;
         //organizingEntities = new OrganizingEntity[MAX_NUM_ORGANIZING_ENTITIES];
-        organizingEntities = new HashTable<String, OrganizingEntity>();
+        organizingEntities = new HashTable<String, OrganizingEntity>(MAX_NUM_ORGANIZING_ENTITIES);
         numOrganizingEntities = 0;
         //files = new QueueArrayImpl<>();
         files = new PriorityQueue<File>(File.CMP);
@@ -55,10 +54,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         mostActivePlayer = null;
         bestSportEvent = null;
         bestSportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_V);
-        workers = new HashTable<String, Worker>();
         //roles = new Role[R];
         //best10SportEvent = new OrderedVector<SportEvent>(BEST_10_SPORTEVENTS+EXTRA, SportEvent.CMP_V);
-        //best5OrganizingEntity = new OrderedVector<OrganizingEntity>(BEST_OrganizingEntities, OrganizingEntity.COMP_RATING);
+        //best5OrganizingEntity = new OrderedVector<OrganizingEntity>(MAX_ORGANIZING_ENTITIES_WITH_MORE_ATTENDERS, OrganizingEntity.COMP_ATTENDER);
     }
 
     @Override
@@ -98,6 +96,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         File file = new File(id, eventId, organizingEntity, description, type, resources, max, startDate, endDate);
         files.add(file);
         totalFiles++;
+        //System.out.println("Ficha primera en la cola del ADDFILE= " + files.peek().getFileId());
     }
 
     @Override
@@ -202,6 +201,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
         sportEvent.addRating(rating, message, player);
         updateBestSportEvent(sportEvent);
+
     }
 
     private void updateBestSportEvent(SportEvent sportEvent) {
@@ -269,7 +269,13 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Level getLevel(String playerId) throws PlayerNotFoundException {
-        return null;
+        Player player = players.get(playerId);
+        if (player == null) {
+            throw new PlayerNotFoundException();
+        }
+
+        Level level = player.getLevel();
+        return level;
     }
 
     @Override
@@ -279,6 +285,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addAttender(String phone, String name, String eventId) throws AttenderAlreadyExistsException, SportEventNotFoundException, LimitExceededException {
+        //Attender attender = getAttender(phone, name);
+
 
     }
 

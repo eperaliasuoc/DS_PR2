@@ -5,10 +5,14 @@ import edu.uoc.ds.adt.sequential.List;
 import edu.uoc.ds.traversal.Iterator;
 
 public class OrganizingEntity {
+//public class OrganizingEntity implements Comparable<OrganizingEntity>{
+  //  public static final Comparator<OrganizingEntity> COMP_ATTENDER =  (OrganizingEntity org1, OrganizingEntity org2)->Double.compare(org1.getAttenders(), org2.getAttenders());
     private String organizationId;
     private String description;
     private String name;
     private List<SportEvent> sportEventList;
+    private List<Worker> workers;
+    private double numRatings;
 
     public OrganizingEntity(String organizationId, String name, String description) {
         this.organizationId = organizationId;
@@ -41,10 +45,6 @@ public class OrganizingEntity {
         this.name = name;
     }
 
-    public Iterator<SportEvent> activities() {
-        return sportEventList.values();
-    }
-
     public void addEvent(SportEvent sportEvent) {
         sportEventList.insertEnd(sportEvent);
     }
@@ -60,4 +60,7 @@ public class OrganizingEntity {
     public Iterator<SportEvent> sportEvents() {
         return sportEventList.values();
     }
+    //public Iterator<SportEvent> activities() {
+    //    return sportEventList.values();
+    //}
 }

@@ -92,8 +92,6 @@ public class FactorySportEvents4Club {
         sportEvents4Club.addFile("F-006", "EV-1106", "ORG-8", "description EV-1106",
                 SportEvents4Club.Type.SMALL, resources6,
                 50, createLocalDate("25-11-2022"), createLocalDate("30-02-2023"));
-        System.out.println("FILES NUM = " + sportEvents4Club.numFiles());
-        System.out.println("FILES PENDING = " + sportEvents4Club.numPendingFiles());
 
         File fileF003 = sportEvents4Club.updateFile(SportEvents4Club.Status.ENABLED,
                 createLocalDate("12-10-2022"), "OK: XXX 0");
@@ -137,7 +135,8 @@ public class FactorySportEvents4Club {
                 SportEvents4Club.Type.SMALL, resources7,
                 50, createLocalDate("25-11-2022"), createLocalDate("30-02-2023"));
 
-/*
+
+
         sportEvents4Club.signUpEvent("idPlayer1", "EV-1101");
         sportEvents4Club.signUpEvent("idPlayer2", "EV-1103");
         sportEvents4Club.signUpEvent("idPlayer3", "EV-1101");
@@ -155,7 +154,7 @@ public class FactorySportEvents4Club {
 
         return sportEvents4Club;
     }
-
+/*
     public static SportEvents4Club getSportEvents4ClubPR2() throws Exception {
         SportEvents4Club sportEvents4Club = FactorySportEvents4Club.getSportEvents4Club();
 
@@ -226,9 +225,7 @@ public class FactorySportEvents4Club {
         sportEvents4Club.addAttender("+346424343", "Pedrerol Roncero",  "EV-1101");
         sportEvents4Club.addAttender("+346232323", "Montse Guatllar",  "EV-1101");
 
-*/
+
         return sportEvents4Club;
-    }
-
-
+    }*/
 }

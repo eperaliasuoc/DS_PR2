@@ -14,6 +14,7 @@ public class Player {
     private List<SportEvent> events;
     private LocalDate birthday;
     private int numRatings;
+    SportEvents4Club.Level level;
 
 	public Player(String idUser, String name, String surname, LocalDate birthday) {
         this.id = idUser;
@@ -92,7 +93,8 @@ public class Player {
         return this.events.size()>0;
     }
 
-    public SportEvents4Club.Level getLevel(Integer rating) {
+    public SportEvents4Club.Level getLevel() {
+        int rating = numRatings;
         return LevelHelper.getLevel(rating);
     }
 
