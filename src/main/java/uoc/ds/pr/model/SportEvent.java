@@ -186,4 +186,10 @@ public class SportEvent implements Comparable<SportEvent> {
     public Iterator<Attender> getAttenders() {
         return attenders.values();
     }
+
+    public Attender getAttender(String phonenumber) {
+        Attender attender = attenders.get(phonenumber);
+        return attender;
+
+    }
 }

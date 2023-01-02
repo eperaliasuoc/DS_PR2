@@ -307,11 +307,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new SportEventNotFoundException();
         }
 
-        Attender attender = getAttenders(sportEventId);
+        //Attender attender = getAttenders(sportEventId);
+        Attender attender = sportEvent.getAttender(phone);
         if (attender.getPhoneNumber() == null) {
             throw new AttenderNotFoundException();
         }
-        return attender.getClass();
+        return attender;
     }
 
     @Override
