@@ -285,7 +285,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addAttender(String phone, String name, String eventId) throws AttenderAlreadyExistsException, SportEventNotFoundException, LimitExceededException {
-        //Attender attender = getAttender(phone, name);
+        Attender attender = sportEvents.get(eventId).getAttenders()getAttender(phone, name);
 
 
     }
