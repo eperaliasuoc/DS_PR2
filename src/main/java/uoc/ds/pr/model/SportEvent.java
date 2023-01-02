@@ -52,6 +52,10 @@ public class SportEvent implements Comparable<SportEvent> {
         return this.attenders.values();
     }
 
+    public Attender getAttender(String phoneNumber) {
+        return attenders.get(phoneNumber);
+    }
+
     public String getEventId() {
         return eventId;
     }
@@ -146,7 +150,7 @@ public class SportEvent implements Comparable<SportEvent> {
     }
 
     public boolean isFull() {
-        return (enrollments.size()>=max);
+        return (enrollments.size() + attenders.size() >= max);
     }
 
     public int numPlayers() {

@@ -170,7 +170,7 @@ public class SportEvents4ClubPR1Test {
         Assert.assertEquals(9, this.sportEvents4Club.numFiles() );
         Assert.assertEquals(0.25, this.sportEvents4Club.getRejectedFiles(),0.03);
     }
-/*
+
     @Test
     public void signUpEventTest() throws DSException {
         // GIVEN:
@@ -197,7 +197,7 @@ public class SportEvents4ClubPR1Test {
 
         Assert.assertEquals(7, this.sportEvents4Club.numPlayersBySportEvent("EV-1104"));
     }
-
+/*
     @Test
     public void getEventsByOrganizingEntityTest() throws DSException {
         // GIVEN:

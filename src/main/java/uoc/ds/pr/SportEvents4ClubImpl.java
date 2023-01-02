@@ -285,19 +285,33 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addAttender(String phone, String name, String eventId) throws AttenderAlreadyExistsException, SportEventNotFoundException, LimitExceededException {
-        Attender attender = sportEvents.get(eventId).getAttenders()getAttender(phone, name);
+        //Attender attender = sportEvents.get(eventId).getAttender()getAttender(phone, name);
 
 
     }
 
     @Override
     public Attender getAttender(String phone, String sportEventId) throws SportEventNotFoundException, AttenderNotFoundException {
-        return null;
+        SportEvent sportEvent = getSportEvent(sportEventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+
+        Iterator<Attender> it = sportEvents.get(sportEventId).getAttenders();
+        if (!it.hasNext()) throw new AttenderNotFoundException();
+        return (Attender) it;
     }
 
     @Override
     public Iterator<Attender> getAttenders(String eventId) throws SportEventNotFoundException, NoAttendersException {
-        return null;
+        SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+
+
+
+        return sportEvents.get(eventId).getAttenders();
     }
 
     @Override

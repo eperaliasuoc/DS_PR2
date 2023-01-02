@@ -30,7 +30,7 @@ public class File implements Comparable<File> {
         this.startDate = startDate;
         this.resources = resources;
         this.endDate = endDate;
-        this.num = num;
+        this.num = max;
         this.status = SportEvents4Club.Status.PENDING;
         this.organizingEntity = organization;
     }
