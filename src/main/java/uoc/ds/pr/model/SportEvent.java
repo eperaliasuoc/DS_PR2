@@ -48,14 +48,6 @@ public class SportEvent implements Comparable<SportEvent> {
         this.workers = new LinkedList<>();
     }
 
-    public Iterator<Attender> getAttenders() {
-        return this.attenders.values();
-    }
-
-    public Attender getAttender(String phoneNumber) {
-        return attenders.get(phoneNumber);
-    }
-
     public String getEventId() {
         return eventId;
     }
@@ -189,5 +181,9 @@ public class SportEvent implements Comparable<SportEvent> {
 
     public int numAttenders() {
         return attenders.size();
+    }
+
+    public Iterator<Attender> getAttenders() {
+        return attenders.values();
     }
 }

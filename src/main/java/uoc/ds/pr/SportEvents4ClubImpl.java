@@ -285,7 +285,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addAttender(String phone, String name, String eventId) throws AttenderAlreadyExistsException, SportEventNotFoundException, LimitExceededException {
-        Attender attender = (Attender) getAttender(phone, eventId);
+        Attender attender = getAttender(phone, eventId);
         if (attender.getPhoneNumber() == phone) {
             throw new AttenderAlreadyExistsException();
         }
@@ -308,15 +308,15 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         }
 
         Attender attender = getAttenders(sportEventId);
-        if (attender == null) {
+        if (attender.getPhoneNumber() == null) {
             throw new AttenderNotFoundException();
         }
-        return attender;
+        return attender.getClass();
     }
 
     @Override
     public Iterator<Attender> getAttenders(String eventId) throws SportEventNotFoundException, NoAttendersException {
-        SportEvent sportEvent = this.getSportEvent(eventId);
+        SportEvent sportEvent = getSportEvent(eventId);
         if (sportEvent == null) {
             throw new SportEventNotFoundException();
         }
