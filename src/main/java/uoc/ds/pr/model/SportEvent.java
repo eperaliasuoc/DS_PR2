@@ -178,4 +178,16 @@ public class SportEvent implements Comparable<SportEvent> {
         this.organizingEntity = organization;
     }
 
+    public void addAttender(String phoneNumber, String name) {
+        Attender newattender = new Attender (phoneNumber, name);
+        attenders.put(phoneNumber, newattender);
+    }
+
+    public boolean hasAttenders() {
+        return attenders.size() > 0;
+    }
+
+    public int numAttenders() {
+        return attenders.size();
+    }
 }

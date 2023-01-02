@@ -285,9 +285,19 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addAttender(String phone, String name, String eventId) throws AttenderAlreadyExistsException, SportEventNotFoundException, LimitExceededException {
-        //Attender attender = sportEvents.get(eventId).getAttender()getAttender(phone, name);
+        Attender attender = (Attender) getAttender(phone, eventId);
+        if (attender.getPhoneNumber() == phone) {
+            throw new AttenderAlreadyExistsException();
+        }
 
-
+        SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+        if (sportEvent.isFull()) {
+            throw new LimitExceededException();
+        }
+        sportEvent.addAttender(phone, name);
     }
 
     @Override
@@ -297,21 +307,26 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new SportEventNotFoundException();
         }
 
-        Iterator<Attender> it = sportEvents.get(sportEventId).getAttenders();
-        if (!it.hasNext()) throw new AttenderNotFoundException();
-        return (Attender) it;
+        Attender attender = getAttenders(sportEventId);
+        if (attender == null) {
+            throw new AttenderNotFoundException();
+        }
+        return attender;
     }
 
     @Override
     public Iterator<Attender> getAttenders(String eventId) throws SportEventNotFoundException, NoAttendersException {
-        SportEvent sportEvent = getSportEvent(eventId);
+        SportEvent sportEvent = this.getSportEvent(eventId);
         if (sportEvent == null) {
             throw new SportEventNotFoundException();
         }
 
+        if (!sportEvent.hasAttenders()) {
+            throw new NoAttendersException();
+        }
 
-
-        return sportEvents.get(eventId).getAttenders();
+        //Iterator<Attender> it = sportEvent.getAttenders();
+        return sportEvent.getAttenders();
     }
 
     @Override
@@ -393,12 +408,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numSportEventsByOrganizingEntity(String orgId) {
-        OrganizingEntity organization = null;
-        if (Integer.parseInt(orgId)<=this.organizingEntities.size()) {
-            organization = getOrganizingEntity(orgId);
-        }
+        OrganizingEntity organization = getOrganizingEntity(orgId);
 
-        return (organization!=null? organization.numEvents():0);
+        return organization.numEvents();
     }
 
     @Override
@@ -476,7 +488,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numAttenders(String sportEventId) {
-        return 0;
+        Integer numAttenders = getSportEvent(sportEventId).numAttenders();
+        return numAttenders;
     }
 
     @Override

@@ -41,7 +41,7 @@ public class SportEvents4ClubPR1Test {
         Assert.assertEquals(7, this.sportEvents4Club.numFiles());
         Assert.assertEquals(1, this.sportEvents4Club.numPendingFiles());
 
-        /*Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer1"));
+        Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer1"));
         Assert.assertEquals(3, this.sportEvents4Club.numSportEventsByPlayer("idPlayer2"));
         Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer3"));
         Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByPlayer("idPlayer4"));
@@ -54,7 +54,7 @@ public class SportEvents4ClubPR1Test {
         Assert.assertEquals(7, this.sportEvents4Club.numPlayersBySportEvent("EV-1101"));
         Assert.assertEquals(3, this.sportEvents4Club.numPlayersBySportEvent("EV-1103"));
         Assert.assertEquals(1, this.sportEvents4Club.numSportEventsByOrganizingEntity("ORG-1"));
-        Assert.assertEquals(3, this.sportEvents4Club.numSportEventsByOrganizingEntity("ORG-3"));*/
+        Assert.assertEquals(3, this.sportEvents4Club.numSportEventsByOrganizingEntity("ORG-3"));
 
     }
 
@@ -111,7 +111,7 @@ public class SportEvents4ClubPR1Test {
         byte resources1 = ResourceUtil.getFlag(SportEvents4Club.FLAG_BASIC_LIFE_SUPPORT,  SportEvents4Club.FLAG_VOLUNTEERS);
         this.sportEvents4Club.addFile("XXX-001", "EV-010", "ORG-1","description EV-010",
                 SportEvents4Club.Type.MEDIUM, resources1, 50,
-                        createLocalDate("22-11-2022"), createLocalDate("28-11-2022"));
+                createLocalDate("22-11-2022"), createLocalDate("28-11-2022"));
 
         Assert.assertEquals(2, this.sportEvents4Club.numPendingFiles() );
         Assert.assertEquals(8, this.sportEvents4Club.numFiles() );
@@ -197,7 +197,7 @@ public class SportEvents4ClubPR1Test {
 
         Assert.assertEquals(7, this.sportEvents4Club.numPlayersBySportEvent("EV-1104"));
     }
-/*
+
     @Test
     public void getEventsByOrganizingEntityTest() throws DSException {
         // GIVEN:
@@ -384,5 +384,5 @@ public class SportEvents4ClubPR1Test {
         Rating rating = it.next();
         Assert.assertEquals(SportEvents4Club.Rating.FIVE, rating.rating());
         Assert.assertEquals("idPlayer1", rating.getPlayer().getId());
-    }*/
+    }
 }

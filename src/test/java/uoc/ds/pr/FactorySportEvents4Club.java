@@ -154,10 +154,10 @@ public class FactorySportEvents4Club {
 
         return sportEvents4Club;
     }
-/*
+
     public static SportEvents4Club getSportEvents4ClubPR2() throws Exception {
         SportEvents4Club sportEvents4Club = FactorySportEvents4Club.getSportEvents4Club();
-
+/*
         ////
         /// Roles
         ////
@@ -191,7 +191,7 @@ public class FactorySportEvents4Club {
 
         sportEvents4Club.addWorker("DNIW7", "Enric", "Giró",
                 createLocalDate("23-04-1955"), "R4");
-
+*/
         //
         // Attenders
 
@@ -227,5 +227,5 @@ public class FactorySportEvents4Club {
 
 
         return sportEvents4Club;
-    }*/
+    }
 }

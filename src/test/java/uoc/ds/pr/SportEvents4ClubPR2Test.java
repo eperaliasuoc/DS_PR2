@@ -14,7 +14,7 @@ import static uoc.ds.pr.util.DateUtils.createLocalDate;
 
 public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
 
-/*
+
     @Before
     public void setUp() throws Exception {
         this.sportEvents4Club = FactorySportEvents4Club.getSportEvents4ClubPR2();
@@ -28,14 +28,14 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
 
     public void initialState() {
 
-        Assert.assertEquals(5, sportEvents4Club.numRoles());
+        /*Assert.assertEquals(5, sportEvents4Club.numRoles());
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R1"));
         Assert.assertEquals(1, sportEvents4Club.numWorkersByRole("R2"));
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R3"));
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R4"));
         Assert.assertEquals(0, sportEvents4Club.numWorkersByRole("R5"));
         Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1103"));
-        Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1101"));
+        Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1101"));*/
         Assert.assertEquals(13, sportEvents4Club.numAttenders("EV-1101"));
         Assert.assertEquals(0, sportEvents4Club.numAttenders("EV-1102"));
         Assert.assertEquals(6, sportEvents4Club.numAttenders("EV-1103"));
@@ -43,7 +43,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals(4, sportEvents4Club.numAttenders("EV-1105"));
         Assert.assertEquals(3, sportEvents4Club.numAttenders("EV-1106"));
     }
-
+/*
     @Test
     public void addRoleTest() {
         // GIVEN:
