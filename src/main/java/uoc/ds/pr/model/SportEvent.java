@@ -192,4 +192,25 @@ public class SportEvent implements Comparable<SportEvent> {
         Attender attender = attenders.get(phonenumber);
         return attender;
     }
+
+    public void addWorker(Worker worker) {
+        workers.insertEnd(worker);
+    }
+
+    //public void removeWorker(Worker worker) {
+    //    Worker.removeWorker(workers, worker);
+    //}
+
+    public int numWorkers() {
+        return workers.size();
+    }
+
+    public Iterator<Worker> workers() {
+        return workers.values();
+    }
+
+    public boolean hasWorkers() {
+        return workers.size() > 0;
+    }
+
 }

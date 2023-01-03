@@ -63,4 +63,6 @@ public class OrganizingEntity {
     //public Iterator<SportEvent> activities() {
     //    return sportEventList.values();
     //}
+
+
 }
