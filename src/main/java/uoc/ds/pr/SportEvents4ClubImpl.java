@@ -306,7 +306,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addAttender(String phone, String name, String eventId) throws AttenderAlreadyExistsException, SportEventNotFoundException, LimitExceededException {
-        Attender attender = getAttender(phone, eventId);
+   /*     Attender attender = getAttender(phone, eventId);
         if (attender.getPhoneNumber() == phone) {
             throw new AttenderAlreadyExistsException();
         }
@@ -317,12 +317,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (sportEvent.isFull()) {
             throw new LimitExceededException();
         }
-        sportEvent.addAttender(phone, name);
+        sportEvent.addAttender(phone, name);*/
     }
 
     @Override
     public Attender getAttender(String phone, String sportEventId) throws SportEventNotFoundException, AttenderNotFoundException {
-        SportEvent sportEvent = getSportEvent(sportEventId);
+       /* SportEvent sportEvent = getSportEvent(sportEventId);
         if (sportEvent == null) {
             throw new SportEventNotFoundException();
         }
@@ -333,7 +333,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (attenders.getPhoneNumber() != phone) {
             throw new AttenderNotFoundException();
         }
-        return attenders;
+        return attenders;*/
+        return null;
     }
 
     @Override
