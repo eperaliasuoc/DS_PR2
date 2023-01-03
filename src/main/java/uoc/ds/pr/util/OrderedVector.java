@@ -125,6 +125,7 @@ public class OrderedVector<E> implements FiniteContainer<E> {
     }
 
     public E last() {
-        return data[len-1];
+//        return data[len-1];
+        return (len>0?data[len-1]:null);
     }
 }

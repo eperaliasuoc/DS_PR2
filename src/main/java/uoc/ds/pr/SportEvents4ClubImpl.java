@@ -289,7 +289,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (attender.getPhoneNumber() == phone) {
             throw new AttenderAlreadyExistsException();
         }
-
         SportEvent sportEvent = getSportEvent(eventId);
         if (sportEvent == null) {
             throw new SportEventNotFoundException();
@@ -307,12 +306,13 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new SportEventNotFoundException();
         }
 
-        //Attender attender = getAttenders(sportEventId);
-        Attender attender = sportEvent.getAttender(phone);
-        if (attender.getPhoneNumber() == null) {
+        Attender attenders = getAttenders(sportEventId);
+        //Attender attender = sportEvent.getAttender(phone);
+
+        if (attenders.getPhoneNumber() == phone) {
             throw new AttenderNotFoundException();
         }
-        return attender;
+        return attenders;
     }
 
     @Override
@@ -326,8 +326,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new NoAttendersException();
         }
 
-        //Iterator<Attender> it = sportEvent.getAttenders();
-        return sportEvent.getAttenders();
+        //Iterator<Attender> it = sportEvent.attenders();
+        return sportEvent.attenders();
     }
 
     @Override
@@ -434,18 +434,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     public OrganizingEntity getOrganizingEntity(String id) {
         return organizingEntities.get(id);
     }
-    /*public void addFile(String id, String eventId, int orgId, String description,
-                        Type type, byte resources, int max, LocalDate startDate, LocalDate endDate) throws OrganizingEntityNotFoundException {
-        if (orgId >= organizingEntities.length) {
-            throw new OrganizingEntityNotFoundException();
-        }
-        OrganizingEntity organization = getOrganizingEntity(String.valueOf(orgId));
-        if (organization == null) {
-            throw new OrganizingEntityNotFoundException();
-        }
-
-        files.add(new File(id, eventId, description, type, startDate, endDate, resources, max, organization));
-        totalFiles++;    }*/
 
     @Override
     public File currentFile() {

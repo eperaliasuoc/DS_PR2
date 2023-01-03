@@ -7,6 +7,7 @@ import edu.uoc.ds.adt.sequential.Queue;
 import edu.uoc.ds.adt.sequential.QueueArrayImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.SportEvents4Club;
+import uoc.ds.pr.SportEvents4ClubImpl;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -15,8 +16,8 @@ import java.util.Comparator;
 import static uoc.ds.pr.SportEvents4Club.MAX_NUM_ENROLLMENT;
 
 public class SportEvent implements Comparable<SportEvent> {
-    public static final Comparator<SportEvent> CMP_V = (se1, se2)->Double.compare(se1.rating(), se2.rating());
-    public static final Comparator<String> CMP_K = (k1, k2)-> k1.compareTo(k2);
+    public static final Comparator<SportEvent> CMP_V = (SportEvent se1, SportEvent se2)->Double.compare(se1.rating(), se2.rating());
+    public static final Comparator<String> CMP_K = (String k1, String k2)-> k1.compareTo(k2);
 
     private String eventId;
     private String description;
@@ -172,7 +173,7 @@ public class SportEvent implements Comparable<SportEvent> {
 
     public void addAttender(String phoneNumber, String name) {
         Attender newattender = new Attender (phoneNumber, name);
-        attenders.put(phoneNumber, newattender);
+        attenders.put(newattender.getPhoneNumber(), newattender);
     }
 
     public boolean hasAttenders() {
@@ -183,13 +184,12 @@ public class SportEvent implements Comparable<SportEvent> {
         return attenders.size();
     }
 
-    public Iterator<Attender> getAttenders() {
+    public Iterator<Attender> attenders() {
         return attenders.values();
     }
 
     public Attender getAttender(String phonenumber) {
         Attender attender = attenders.get(phonenumber);
         return attender;
-
     }
 }

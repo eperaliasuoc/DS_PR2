@@ -62,6 +62,14 @@ public class DictionaryOrderedVector<K,V> extends DictionaryArrayImpl<K,V> imple
         return (pos != KEY_NOT_FOUND ? dictionary[pos].getValue() : null);
     }
 
+    public V get(K clau, String message) throws DSException {
+        V value = get(clau);
+        if (value == null) {
+            throw new DSException(message);
+        }
+        return value;
+    }
+
     /**
      * private method that performs a binary search
      *
