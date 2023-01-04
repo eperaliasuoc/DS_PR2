@@ -34,8 +34,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     private SportEvent BestSportEvent;
     private OrderedVector<SportEvent> bestSportEvent;
     private Role[] roles;
-    private int numWorkers;
     private int numRoles;
+    private HashTable<String, Worker> workers;
+    private int numWorkers;
     private OrderedVector<OrganizingEntity> best5OrganizingEntity;
     private OrderedVector<SportEvent> best10SportEvent;
 
@@ -58,6 +59,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         bestSportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_V);
         roles = new Role[MAX_ROLES];
         numRoles = 0;
+        workers = new HashTable<String, Worker>();
         numWorkers = 0;
         //best10SportEvent = new OrderedVector<SportEvent>(BEST_10_SPORTEVENTS+EXTRA, SportEvent.CMP_V);
         //best5OrganizingEntity = new OrderedVector<OrganizingEntity>(MAX_ORGANIZING_ENTITIES_WITH_MORE_ATTENDERS, OrganizingEntity.COMP_ATTENDER);
@@ -249,15 +251,32 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public void addRole(String roleId, String description) {
         Role role = getRole(roleId);
-        role.setName(description);
+        if (role != null) {
+            role.setDescription(description);
+        } else {
+            role = new Role(roleId, description);
+            addRole(role);
+        }
+    }
+
+    public void addRole(Role role) {
         roles[numRoles++] = role;
     }
 
     @Override
     public void addWorker(String dni, String name, String surname, LocalDate birthDay, String roleId) {
+        //Worker worker = null;
         Role role = getRole(roleId);
-        Worker worker = new Worker(dni, name, surname, birthDay, role);
-        role.addWorker(worker);
+        Worker worker = getWorker(dni);
+
+        if (worker != null) {
+            worker.setRole(role);
+        } else {
+            worker = new Worker(dni, name, surname, birthDay, role);
+            workers.put(worker.getId(), worker);
+            worker.setRole(role);
+            numWorkers++;
+        }
     }
 
     @Override
@@ -485,17 +504,21 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Worker getWorker(String dni) {
-        return null;
+        return workers.get(dni);
     }
 
     @Override
     public int numWorkersByRole(String roleId) {
-        return 0;
+        Role role = getRole(roleId);
+
+        return (role!=null?role.numWorkers(): 0);
     }
 
     @Override
     public int numWorkersBySportEvent(String sportEventId) {
-        return 0;
+        SportEvent sportEvent = getSportEvent(sportEventId);
+
+        return (sportEvent!=null?sportEvent.numWorkers(): 0);
     }
 
     @Override

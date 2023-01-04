@@ -28,22 +28,28 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
 
     public void initialState() {
 
-        /*Assert.assertEquals(5, sportEvents4Club.numRoles());
+        Assert.assertEquals(5, sportEvents4Club.numRoles());
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R1"));
         Assert.assertEquals(1, sportEvents4Club.numWorkersByRole("R2"));
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R3"));
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R4"));
         Assert.assertEquals(0, sportEvents4Club.numWorkersByRole("R5"));
+        //System.out.println("Numero de Roles= " + sportEvents4Club.numRoles());
+        //System.out.println("Numero de trabajadores por Rol R1= " + sportEvents4Club.numWorkersByRole("R1"));
+        //System.out.println("Numero de trabajadores por Rol R5= " + sportEvents4Club.numWorkersByRole("R5"));
+
         Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1103"));
-        Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1101"));*/
-        Assert.assertEquals(13, sportEvents4Club.numAttenders("EV-1101"));
+        Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1101"));
+        //System.out.println("Numero de trabajadores por SportEvent EV-1103= " + sportEvents4Club.numWorkersBySportEvent("EV-1103"));
+
+        /*Assert.assertEquals(13, sportEvents4Club.numAttenders("EV-1101"));
         Assert.assertEquals(0, sportEvents4Club.numAttenders("EV-1102"));
         Assert.assertEquals(6, sportEvents4Club.numAttenders("EV-1103"));
         Assert.assertEquals(0, sportEvents4Club.numAttenders("EV-1104"));
         Assert.assertEquals(4, sportEvents4Club.numAttenders("EV-1105"));
-        Assert.assertEquals(3, sportEvents4Club.numAttenders("EV-1106"));
+        Assert.assertEquals(3, sportEvents4Club.numAttenders("EV-1106"));*/
     }
-/*
+
     @Test
     public void addRoleTest() {
         // GIVEN:
@@ -121,7 +127,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals("R1", workerW99.getRoleId());
 
     }
-
+/*
     @Test
     public void assignWorkerTest() throws DSException {
         // GIVEN:

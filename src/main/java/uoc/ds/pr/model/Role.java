@@ -24,11 +24,11 @@ public class Role {
         return roleId;
     }
 
-    public void setName(String name) {
+    public void setDescription(String name) {
         this.name = name;
     }
 
-    public String getName() {
+    public String getDescription() {
         return name;
     }
 
@@ -39,10 +39,6 @@ public class Role {
     public void addWorker(Worker worker) {
         workers.insertEnd(worker);
     }
-
-  //  public void removeWorker(Worker worker) {
-  //      Worker.remo           (workers, worker);
-  //  }
 
     public int numWorkers() {
         return workers.size();

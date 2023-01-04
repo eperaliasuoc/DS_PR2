@@ -28,6 +28,14 @@ public class Worker {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     public void setRole(Role role) {
         this.role = role;
         this.role.addWorker(this);
@@ -55,5 +63,9 @@ public class Worker {
 
     public boolean is(String userId) {
         return id.equals(userId);
+    }
+
+    public Iterator<Worker> workers() {
+        return workers();
     }
 }
