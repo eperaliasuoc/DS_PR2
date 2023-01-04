@@ -8,4 +8,9 @@ public class Enrollment {
         player = player;
         isSubstitute = isSubstitute;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
 }

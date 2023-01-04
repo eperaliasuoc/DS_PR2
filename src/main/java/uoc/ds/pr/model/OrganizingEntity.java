@@ -12,7 +12,6 @@ public class OrganizingEntity {
     private String name;
     private List<SportEvent> sportEventList;
     private List<Worker> workers;
-    private double numRatings;
 
     public OrganizingEntity(String organizationId, String name, String description) {
         this.organizationId = organizationId;

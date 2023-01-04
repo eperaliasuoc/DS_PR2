@@ -191,7 +191,8 @@ public class FactorySportEvents4Club {
 
         sportEvents4Club.addWorker("DNIW7", "Enric", "Giró",
                 createLocalDate("23-04-1955"), "R4");
-   /*     //
+   /*
+        //
         // Attenders
 
         sportEvents4Club.addAttender("+346155543", "Peña Garcia",  "EV-1106");

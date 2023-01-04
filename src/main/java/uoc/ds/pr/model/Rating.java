@@ -14,7 +14,6 @@ public class Rating {
     }
 
     public SportEvents4Club.Rating rating() {
-
         return this.rating;
     }
 

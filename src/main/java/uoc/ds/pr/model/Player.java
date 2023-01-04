@@ -14,7 +14,9 @@ public class Player {
     private List<SportEvent> events;
     private LocalDate birthday;
     private int numRatings;
+    private int totalRatings;
     SportEvents4Club.Level level;
+    private List<Rating> ratings;
 
 	public Player(String idUser, String name, String surname, LocalDate birthday) {
         this.id = idUser;
@@ -104,6 +106,15 @@ public class Player {
 
     public void incNumRatings() {
         numRatings++;
+    }
+
+    public void addRating(SportEvents4Club.Rating rating) {
+        incNumRatings();
+        totalRatings+= rating.getValue();
+    }
+
+    public Integer getNumRatings() {
+        return numRatings;
     }
 
     //public boolean hasLessThanNumRatings(int num) {

@@ -40,6 +40,10 @@ public class Role {
         workers.insertEnd(worker);
     }
 
+    public void removeWorker(Worker worker) {
+        Worker.removeWorker(workers, worker);
+    }
+
     public int numWorkers() {
         return workers.size();
     }

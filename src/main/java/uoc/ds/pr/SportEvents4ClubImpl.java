@@ -102,7 +102,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         File file = new File(id, eventId, organizingEntity, description, type, resources, max, startDate, endDate);
         files.add(file);
         totalFiles++;
-        //System.out.println("Ficha primera en la cola del ADDFILE= " + files.peek().getFileId());
     }
 
     @Override
@@ -139,8 +138,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         player.addEvent(sportEvent);
         if (!sportEvent.isFull()) {
             sportEvent.addEnrollment(player);
-        }
-        else {
+        } else {
             sportEvent.addEnrollmentAsSubstitute(player);
             throw new LimitExceededException();
         }
@@ -185,7 +183,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new NoSportEventsException();
         }
         Iterator<SportEvent> it = player.getEvents();
-
         return it;
     }
 
@@ -269,13 +266,20 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         Role role = getRole(roleId);
         Worker worker = getWorker(dni);
 
-        if (worker != null) {
-            worker.setRole(role);
-        } else {
+        if (worker == null) {
             worker = new Worker(dni, name, surname, birthDay, role);
-            workers.put(worker.getId(), worker);
+            workers.put(worker.getDni(), worker);
             worker.setRole(role);
             numWorkers++;
+        } else if (worker != null) {
+            worker.setName(name);
+            worker.setSurname(surname);
+            worker.setBirthday(birthDay);
+            workers.put(worker.getDni(), worker);
+            if ((worker.getDni() == dni) && (worker.getRoleId() != roleId)) {
+                worker.getRole().removeWorker(worker);
+                worker.setRole(role);
+            }
         }
     }
 
@@ -289,22 +293,37 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (worker == null) {
             throw new WorkerNotFoundException();
         }
-        if (sportEvent.workers().equals(worker)) {
+
+        if (sportEvent.isInSportEvent(dni)) {
             throw new WorkerAlreadyAssignedException();
         }
         worker.setSportEvent(sportEvent);
         sportEvent.addWorker(worker);
-        numWorkers++;
     }
 
     @Override
     public Iterator<Worker> getWorkersBySportEvent(String eventId) throws SportEventNotFoundException, NoWorkersException {
-        return null;
+        SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+        if (!sportEvent.hasWorkers()) {
+            throw new NoWorkersException();
+        }
+
+        Iterator<Worker> it = sportEvent.workers();
+        return it;
     }
 
     @Override
     public Iterator<Worker> getWorkersByRole(String roleId) throws NoWorkersException {
-        return null;
+        Role role = getRole(roleId);
+
+        if (!role.hasMembers()) {
+            throw new NoWorkersException();
+        }
+
+        return role.workers();
     }
 
     @Override
@@ -320,7 +339,16 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<Enrollment> getSubstitutes(String eventId) throws SportEventNotFoundException, NoSubstitutesException {
-        return null;
+        SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+
+        if (sportEvent.getNumSubstitutes() == 0) {
+            throw new NoSubstitutesException();
+        }
+
+        return sportEvent.EnrollmentAsSubstitute();
     }
 
     @Override
@@ -523,7 +551,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numRatings(String playerId) {
-        return 0;
+        return getPlayer(playerId).getNumRatings();
     }
 
     @Override

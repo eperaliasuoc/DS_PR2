@@ -1,13 +1,13 @@
 package uoc.ds.pr.model;
 
 import edu.uoc.ds.adt.nonlinear.HashTable;
+import edu.uoc.ds.adt.nonlinear.PriorityQueue;
 import edu.uoc.ds.adt.sequential.LinkedList;
 import edu.uoc.ds.adt.sequential.List;
 import edu.uoc.ds.adt.sequential.Queue;
 import edu.uoc.ds.adt.sequential.QueueArrayImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.SportEvents4Club;
-import uoc.ds.pr.SportEvents4ClubImpl;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -17,7 +17,7 @@ import static uoc.ds.pr.SportEvents4Club.MAX_NUM_ENROLLMENT;
 
 public class SportEvent implements Comparable<SportEvent> {
     public static final Comparator<SportEvent> CMP_V = (SportEvent se1, SportEvent se2)->Double.compare(se1.rating(), se2.rating());
-    public static final Comparator<String> CMP_K = (String k1, String k2)-> k1.compareTo(k2);
+    public static final Comparator<SportEvent> CMP_RATING = (SportEvent s1, SportEvent s2)->Double.compare(s1.getRating(), s2.getRating());
 
     private String eventId;
     private String description;
@@ -28,7 +28,9 @@ public class SportEvent implements Comparable<SportEvent> {
     private File file;
     private List<Rating> ratings;
     private Queue<Enrollment> enrollments;
-    private double sumRating;
+    private PriorityQueue<Enrollment> enrollmentsubs;
+    private double sumRatings;
+    private double numRatings;
     private int numSubstitutes;
     private HashTable<String, Attender> attenders;
     private List<Worker> workers;
@@ -43,10 +45,11 @@ public class SportEvent implements Comparable<SportEvent> {
         setMax(max);
         setFile(file);
         this.enrollments = new QueueArrayImpl<>(MAX_NUM_ENROLLMENT);
-        this.ratings = new LinkedList<>();
+        this.enrollmentsubs = new PriorityQueue<Enrollment>();
+        this.ratings = new LinkedList<Rating>();
         numSubstitutes = 0;
         attenders = new HashTable<String, Attender>();
-        this.workers = new LinkedList<>();
+        this.workers = new LinkedList<Worker>();
     }
 
     public String getEventId() {
@@ -107,18 +110,23 @@ public class SportEvent implements Comparable<SportEvent> {
 
 
     public double rating() {
-        return (this.ratings.size()>0?(sumRating / this.ratings.size()):0);
+        return (this.ratings.size()>0?(sumRatings / this.ratings.size()):0);
     }
 
     public void addRating(SportEvents4Club.Rating rating, String message, Player player) {
         Rating newRating = new Rating(rating, message, player);
         ratings.insertEnd(newRating);
-        sumRating+=rating.getValue();
+        sumRatings+=rating.getValue();
+        numRatings++;
         player.incNumRatings();
     }
 
+    public double getRating() {
+        return (numRatings != 0 ? (double)sumRatings / numRatings : 0);
+    }
+
     public boolean hasRatings() {
-        return ratings.size()>0;
+        return ratings.size() > 0;
     }
 
     public Iterator<Rating> ratings() {
@@ -130,7 +138,27 @@ public class SportEvent implements Comparable<SportEvent> {
     }
 
     public void addEnrollment(Player player, boolean isSubstitute) {
-        enrollments.add(new Enrollment(player, isSubstitute));
+
+        if (isSubstitute == false) {
+            enrollments.add(new Enrollment(player, isSubstitute));
+        } else {
+            enrollmentsubs.add(new Enrollment(player, isSubstitute));
+        }
+    }
+
+    public void incSubstitutes() {
+        numSubstitutes++;
+    }
+
+    public void addEnrollmentAsSubstitute(Player player) {
+        addEnrollment(player, true);
+        incSubstitutes();
+    }
+    public Iterator<Enrollment> EnrollmentAsSubstitute() {
+        return enrollmentsubs.values();
+    }
+    public int getNumSubstitutes() {
+        return numSubstitutes;
     }
 
     public boolean is(String eventId) {
@@ -147,20 +175,8 @@ public class SportEvent implements Comparable<SportEvent> {
     }
 
     public int numPlayers() {
-        return enrollments.size();
-    }
-
-    public void incSubstitutes() {
-        numSubstitutes++;
-    }
-
-    public void addEnrollmentAsSubstitute(Player player) {
-        addEnrollment(player, true);
-        incSubstitutes();
-    }
-
-    public int getNumSubstitutes() {
-        return numSubstitutes;
+        int totalPlayers = enrollments.size() + enrollmentsubs.size();
+        return totalPlayers;
     }
 
     public OrganizingEntity getOrganization() {
@@ -171,10 +187,10 @@ public class SportEvent implements Comparable<SportEvent> {
         this.organizingEntity = organization;
     }
 
-    public void addAttender(String phoneNumber, String name) {
+    /*public void addAttender(String phoneNumber, String name) {
         Attender newattender = new Attender (phoneNumber, name);
         attenders.put(newattender.getPhoneNumber(), newattender);
-    }
+    }*/
 
     public boolean hasAttenders() {
         return attenders.size() > 0;
@@ -188,10 +204,10 @@ public class SportEvent implements Comparable<SportEvent> {
         return attenders.values();
     }
 
-    public Attender getAttender(String phonenumber) {
+   /* public Attender getAttender(String phonenumber) {
         Attender attender = attenders.get(phonenumber);
         return attender;
-    }
+    }*/
 
     public void addWorker(Worker worker) {
         workers.insertEnd(worker);
@@ -211,6 +227,17 @@ public class SportEvent implements Comparable<SportEvent> {
 
     public boolean hasWorkers() {
         return workers.size() > 0;
+    }
+
+    public boolean isInSportEvent(String dni) {
+        Iterator<Worker> it = workers.values();
+        boolean found = false;
+        Worker w = null;
+        while (it.hasNext() && !found) {
+            w = it.next();
+            found = w.is(dni);
+        }
+        return found;
     }
 
 }

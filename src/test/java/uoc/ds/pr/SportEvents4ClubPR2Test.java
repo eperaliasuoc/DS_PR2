@@ -34,13 +34,8 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R3"));
         Assert.assertEquals(2, sportEvents4Club.numWorkersByRole("R4"));
         Assert.assertEquals(0, sportEvents4Club.numWorkersByRole("R5"));
-        //System.out.println("Numero de Roles= " + sportEvents4Club.numRoles());
-        //System.out.println("Numero de trabajadores por Rol R1= " + sportEvents4Club.numWorkersByRole("R1"));
-        //System.out.println("Numero de trabajadores por Rol R5= " + sportEvents4Club.numWorkersByRole("R5"));
-
         Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1103"));
         Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1101"));
-        //System.out.println("Numero de trabajadores por SportEvent EV-1103= " + sportEvents4Club.numWorkersBySportEvent("EV-1103"));
 
         /*Assert.assertEquals(13, sportEvents4Club.numAttenders("EV-1101"));
         Assert.assertEquals(0, sportEvents4Club.numAttenders("EV-1102"));
@@ -127,9 +122,9 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals("R1", workerW99.getRoleId());
 
     }
-/*
+
     @Test
-    public void assignWorkerTest() throws DSException {
+    public void assignWorkerTest() throws DSException, WorkerAlreadyAssignedException {
         // GIVEN:
         initialState();
         //
@@ -144,10 +139,8 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         sportEvents4Club.assignWorker("DNIW2", "EV-1103");
         sportEvents4Club.assignWorker("DNIW3", "EV-1103");
         sportEvents4Club.assignWorker("DNIW4", "EV-1103");
-
         sportEvents4Club.assignWorker("DNIW5", "EV-1101");
         sportEvents4Club.assignWorker("DNIW6", "EV-1101");
-
 
         Assert.assertThrows(WorkerAlreadyAssignedException.class, () ->
                 sportEvents4Club.assignWorker("DNIW1", "EV-1103"));
@@ -158,7 +151,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
     }
 
     @Test
-    public void getWorkersBySportEventTest() throws DSException {
+    public void getWorkersBySportEventTest() throws DSException, WorkerAlreadyAssignedException {
 
         // GIVEN:
         initialState();
@@ -187,6 +180,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals("DNIW5", it2.next().getDni());
         Assert.assertEquals("DNIW6", it2.next().getDni());
     }
+
 
     @Test
     public void getWorkersByRoleTest() throws DSException {
@@ -295,7 +289,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
 
     }
 
-
+/*
     @Test
     public void getSubstitutesTest() throws DSException {
         //
@@ -356,10 +350,8 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals("idPlayer7", player7.getId());
         Assert.assertEquals(SportEvents4Club.Level.ROOKIE, player7.getLevel());
 
-
-
     }
-
+/*
     @Test
     public void addAttender() throws DSException {
         //
