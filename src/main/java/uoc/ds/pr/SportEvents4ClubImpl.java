@@ -205,6 +205,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         sportEvent.addRating(rating, message, player);
         updateBestSportEvent(sportEvent);
 
+        player.addRating(rating);
+
     }
 
     private void updateBestSportEvent(SportEvent sportEvent) {
