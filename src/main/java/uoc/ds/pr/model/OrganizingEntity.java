@@ -3,15 +3,20 @@ package uoc.ds.pr.model;
 import edu.uoc.ds.adt.sequential.LinkedList;
 import edu.uoc.ds.adt.sequential.List;
 import edu.uoc.ds.traversal.Iterator;
+import java.util.Comparator;
 
-public class OrganizingEntity {
-//public class OrganizingEntity implements Comparable<OrganizingEntity>{
-  //  public static final Comparator<OrganizingEntity> COMP_ATTENDER =  (OrganizingEntity org1, OrganizingEntity org2)->Double.compare(org1.getAttenders(), org2.getAttenders());
+//public class OrganizingEntity {
+public class OrganizingEntity implements Comparable<OrganizingEntity>{
+    //public static final Comparator<OrganizingEntity> COMP_ATTENDER =  (OrganizingEntity org1, OrganizingEntity org2)->org1.compareTo(org2);
+    public static final Comparator<OrganizingEntity> COMP_ATTENDER =  (OrganizingEntity org1, OrganizingEntity org2)->Integer.compare(org1.numAttenders(),org2.numAttenders());
+
     private String organizationId;
     private String description;
     private String name;
     private List<SportEvent> sportEventList;
     private List<Worker> workers;
+    private int numAttenders;
+
 
     public OrganizingEntity(String organizationId, String name, String description) {
         this.organizationId = organizationId;
@@ -63,5 +68,23 @@ public class OrganizingEntity {
     //    return sportEventList.values();
     //}
 
+    public int numAttenders() {
+        return numAttenders;
+    }
 
+    public void incAttenders() {
+        numAttenders++;
+    }
+
+    public int compareTo(OrganizingEntity org) {
+        //int result = this.numAttenders().compareTo(org.numAttenders());
+        int result = Integer.compare(this.numAttenders(),org.numAttenders());
+                System.out.println("Organization1 del compareTo de  = " + this.getOrganizationId());
+        System.out.println("Organization2 del compareTo de  = " + org.getOrganizationId());
+        System.out.println("Organization1 numAttenders  = " + this.numAttenders);
+        System.out.println("Organization2 numAttenders  = " + org.numAttenders);
+        System.out.println("Resultado del compareTo de Organization = " + result);
+
+        return result;
+    }
 }

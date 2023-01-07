@@ -108,6 +108,10 @@ public class SportEvent implements Comparable<SportEvent> {
         this.file = file;
     }
 
+    public OrganizingEntity getOrganizingEntity() {
+        return organizingEntity;
+    }
+
 
     public double rating() {
         return (this.ratings.size()>0?(sumRatings / this.ratings.size()):0);
@@ -186,13 +190,21 @@ public class SportEvent implements Comparable<SportEvent> {
         this.organizingEntity = organization;
     }
 
-    /*public void addAttender(String phoneNumber, String name) {
+    public void addAttender(String phoneNumber, String name) {
         Attender newattender = new Attender (phoneNumber, name);
         attenders.put(newattender.getPhoneNumber(), newattender);
-    }*/
+    }
 
     public boolean hasAttenders() {
         return attenders.size() > 0;
+    }
+
+    public boolean existsAttender(String phone) {
+        boolean found = false;
+        if (attenders.get(phone) != null) {
+            found = true;
+        }
+        return found;
     }
 
     public int numAttenders() {
@@ -203,10 +215,10 @@ public class SportEvent implements Comparable<SportEvent> {
         return attenders.values();
     }
 
-   /* public Attender getAttender(String phonenumber) {
+    public Attender getAttender(String phonenumber) {
         Attender attender = attenders.get(phonenumber);
         return attender;
-    }*/
+    }
 
     public void addWorker(Worker worker) {
         workers.insertEnd(worker);

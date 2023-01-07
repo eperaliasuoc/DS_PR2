@@ -191,7 +191,7 @@ public class FactorySportEvents4Club {
 
         sportEvents4Club.addWorker("DNIW7", "Enric", "Giró",
                 createLocalDate("23-04-1955"), "R4");
-   /*
+
         //
         // Attenders
 
@@ -223,7 +223,7 @@ public class FactorySportEvents4Club {
         sportEvents4Club.addAttender("+346333333", "Leonel Mezi",  "EV-1101");
         sportEvents4Club.addAttender("+346444444", "Luis Paadrique",  "EV-1101");
         sportEvents4Club.addAttender("+346424343", "Pedrerol Roncero",  "EV-1101");
-        sportEvents4Club.addAttender("+346232323", "Montse Guatllar",  "EV-1101");*/
+        sportEvents4Club.addAttender("+346232323", "Montse Guatllar",  "EV-1101");
 
 
         return sportEvents4Club;

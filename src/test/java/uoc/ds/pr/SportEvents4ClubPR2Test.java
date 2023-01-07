@@ -37,12 +37,12 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1103"));
         Assert.assertEquals(0, sportEvents4Club.numWorkersBySportEvent("EV-1101"));
 
-        /*Assert.assertEquals(13, sportEvents4Club.numAttenders("EV-1101"));
+        Assert.assertEquals(13, sportEvents4Club.numAttenders("EV-1101"));
         Assert.assertEquals(0, sportEvents4Club.numAttenders("EV-1102"));
         Assert.assertEquals(6, sportEvents4Club.numAttenders("EV-1103"));
         Assert.assertEquals(0, sportEvents4Club.numAttenders("EV-1104"));
         Assert.assertEquals(4, sportEvents4Club.numAttenders("EV-1105"));
-        Assert.assertEquals(3, sportEvents4Club.numAttenders("EV-1106"));*/
+        Assert.assertEquals(3, sportEvents4Club.numAttenders("EV-1106"));
     }
 
     @Test
@@ -351,7 +351,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals(SportEvents4Club.Level.ROOKIE, player7.getLevel());
 
     }
-/*
+
     @Test
     public void addAttender() throws DSException {
         //
@@ -435,7 +435,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Assert.assertEquals("ORG-8", org2.getOrganizationId());
         Assert.assertEquals(3, org2.numAttenders());
     }
-
+/*
     @Test
     public void bestSportEventByAttenders() throws DSException {
         SportEvent sportEvent = sportEvents4Club.bestSportEventByAttenders();
