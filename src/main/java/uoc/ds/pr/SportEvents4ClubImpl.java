@@ -62,7 +62,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         workers = new HashTable<String, Worker>();
         numWorkers = 0;
         best5OrganizingEntity = new OrderedVector<OrganizingEntity>(MAX_ORGANIZING_ENTITIES_WITH_MORE_ATTENDERS, OrganizingEntity.COMP_ATTENDER);
-
         //best10SportEvent = new OrderedVector<SportEvent>(BEST_10_SPORTEVENTS+EXTRA, SportEvent.CMP_V);
     }
 
@@ -361,8 +360,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (sportEvent == null) {
             throw new SportEventNotFoundException();
         }
-        //if (attender.getPhoneNumber() == phone) {
-        //System.out.println("Phone del attender en addAttender = " + phone);
+
         if (sportEvent.existsAttender(phone)) {
             throw new AttenderAlreadyExistsException();
         }
@@ -406,7 +404,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<OrganizingEntity> best5OrganizingEntities() throws NoAttendersException {
-        //System.out.println("Numero de OrganizingEntities en best5OrganizingEntity = " + best5OrganizingEntity.size());
+        System.out.println("OrganizingEntities en best5OrganizingEntity 1 = " + best5OrganizingEntity.elementAt(1).getOrganizationId());
+        System.out.println("OrganizingEntities en best5OrganizingEntity 2 = " + best5OrganizingEntity.elementAt(2).getOrganizationId());
+        System.out.println("OrganizingEntities en best5OrganizingEntity 3 = " + best5OrganizingEntity.elementAt(3).getOrganizationId());
 
         if (best5OrganizingEntity.isEmpty()) {
             throw new NoAttendersException();
