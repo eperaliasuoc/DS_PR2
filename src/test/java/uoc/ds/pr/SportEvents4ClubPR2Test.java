@@ -417,7 +417,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         Iterator<Attender> it = sportEvents4Club.getAttenders("EV-1101");
         Assert.assertTrue(it.hasNext());
     }
-/*
+
     @Test
     public void best5OrganizingEntitiesTest() throws DSException {
         initialState();
@@ -434,7 +434,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         OrganizingEntity org2 = it.next();
         Assert.assertEquals("ORG-8", org2.getOrganizationId());
         Assert.assertEquals(3, org2.numAttenders());
-    }*/
+    }
 
     @Test
     public void bestSportEventByAttenders() throws DSException {

@@ -8,7 +8,7 @@ import java.util.Comparator;
 //public class OrganizingEntity {
 public class OrganizingEntity implements Comparable<OrganizingEntity>{
     //public static final Comparator<OrganizingEntity> COMP_ATTENDER =  (OrganizingEntity org1, OrganizingEntity org2)->org1.compareTo(org2);
-    public static final Comparator<OrganizingEntity> COMP_ATTENDER =  (OrganizingEntity org1, OrganizingEntity org2)->Integer.compare(org1.numAttenders(),org2.numAttenders());
+    public static final Comparator<OrganizingEntity> COMP_ATTENDER =  (OrganizingEntity org1, OrganizingEntity org2)->Double.compare(org1.numAttenders(),org2.numAttenders());
 
     private String organizationId;
     private String description;
@@ -77,14 +77,6 @@ public class OrganizingEntity implements Comparable<OrganizingEntity>{
     }
 
     public int compareTo(OrganizingEntity org) {
-        //int result = this.numAttenders().compareTo(org.numAttenders());
-        int result = Integer.compare(numAttenders(), org.numAttenders());
-        /*System.out.println("Organization1 del compareTo de  = " + this.getOrganizationId());
-        System.out.println("Organization2 del compareTo de  = " + org.getOrganizationId()); */
-        System.out.println("Organization1 numAttenders  = " + this.numAttenders());
-        System.out.println("Organization2 numAttenders  = " + org.numAttenders());
-        System.out.println("Resultado del compareTo de Organization = " + result);
-
-        return result;
+        return this.getOrganizationId().compareTo(org.getOrganizationId());
     }
 }

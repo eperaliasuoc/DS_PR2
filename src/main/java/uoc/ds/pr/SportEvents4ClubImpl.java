@@ -14,22 +14,14 @@ import uoc.ds.pr.util.OrderedVector;
 
 
 public class SportEvents4ClubImpl implements SportEvents4Club {
-    //private Player[] players;
     private Dictionary<String, Player> players;
     private int numPlayers;
-
-    //private OrganizingEntity[] organizingEntities;
     private HashTable<String, OrganizingEntity> organizingEntities;
     private int numOrganizingEntities;
-
-    //private Queue<File> files;
     private PriorityQueue<File> files;
-    //private Dictionary<String, SportEvent> sportEvents;
     private Dictionary<String, SportEvent> sportEvents;
-
     private int totalFiles;
     private int rejectedFiles;
-
     private Player mostActivePlayer;
     private SportEvent BestSportEvent;
     private OrderedVector<SportEvent> bestSportEvent;
@@ -40,22 +32,16 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     private OrderedVector<OrganizingEntity> best5OrganizingEntity;
     private OrderedVector<SportEvent> best10SportEvent;
 
-
     public SportEvents4ClubImpl() {
-        //players = new Player[MAX_NUM_PLAYER];
         players = new DictionaryAVLImpl<String, Player>();
         numPlayers = 0;
-        //organizingEntities = new OrganizingEntity[MAX_NUM_ORGANIZING_ENTITIES];
         organizingEntities = new HashTable<String, OrganizingEntity>(MAX_NUM_ORGANIZING_ENTITIES);
         numOrganizingEntities = 0;
-        //files = new QueueArrayImpl<>();
         files = new PriorityQueue<File>(File.CMP);
-        //sportEvents = new DictionaryOrderedVector<String, SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_K);
         sportEvents = new DictionaryAVLImpl<String, SportEvent>();
         totalFiles = 0;
         rejectedFiles = 0;
         mostActivePlayer = null;
-        bestSportEvent = null;
         bestSportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_V);
         roles = new Role[MAX_ROLES];
         numRoles = 0;
@@ -119,7 +105,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         else {
             rejectedFiles++;
         }
-
         return file;
     }
 
@@ -206,11 +191,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         updateBestSportEvent(sportEvent);
 
         player.addRating(rating);
-
     }
 
     private void updateBestSportEvent(SportEvent sportEvent) {
-        //bestSportEvent.delete(sportEvent);
         bestSportEvent.update(sportEvent);
         best10SportEvent.update(sportEvent);
     }
@@ -226,7 +209,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (!sportEvent.hasRatings()) {
             throw new NoRatingsException();
         }
-
         return sportEvent.ratings();
     }
 
@@ -235,7 +217,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (mostActivePlayer == null) {
             throw new PlayerNotFoundException();
         }
-
         return mostActivePlayer;
     }
 
@@ -244,7 +225,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (bestSportEvent.size() == 0) {
             throw new SportEventNotFoundException();
         }
-
         return bestSportEvent.elementAt(0);
     }
 
@@ -325,7 +305,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (!role.hasMembers()) {
             throw new NoWorkersException();
         }
-
         return role.workers();
     }
 
@@ -350,13 +329,11 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (sportEvent.getNumSubstitutes() == 0) {
             throw new NoSubstitutesException();
         }
-
         return sportEvent.EnrollmentAsSubstitute();
     }
 
     @Override
     public void addAttender(String phone, String name, String eventId) throws AttenderAlreadyExistsException, SportEventNotFoundException, LimitExceededException {
-       //Attender attender = getAttender(phone, eventId);
         SportEvent sportEvent = getSportEvent(eventId);
         if (sportEvent == null) {
             throw new SportEventNotFoundException();
@@ -371,6 +348,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         }
         sportEvent.addAttender(phone, name);
         updateBestSportEvent(sportEvent);
+
         OrganizingEntity organizingEntity = sportEvent.getOrganizingEntity();
         organizingEntity.incAttenders();
         best5OrganizingEntity.update(organizingEntity);
@@ -400,16 +378,11 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (!sportEvent.hasAttenders()) {
             throw new NoAttendersException();
         }
-
         return sportEvent.attenders();
     }
 
     @Override
     public Iterator<OrganizingEntity> best5OrganizingEntities() throws NoAttendersException {
-        //System.out.println("OrganizingEntities en best5OrganizingEntity 1 = " + best5OrganizingEntity.elementAt(1).getOrganizationId());
-        //System.out.println("OrganizingEntities en best5OrganizingEntity 2 = " + best5OrganizingEntity.elementAt(2).getOrganizationId());
-        //System.out.println("OrganizingEntities en best5OrganizingEntity 3 = " + best5OrganizingEntity.elementAt(3).getOrganizationId());
-
         if (best5OrganizingEntity.isEmpty()) {
             throw new NoAttendersException();
         }
@@ -494,14 +467,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public int numSportEventsByOrganizingEntity(String orgId) {
         OrganizingEntity organization = getOrganizingEntity(orgId);
-
         return organization.numEvents();
     }
 
     @Override
     public int numSubstitutesBySportEvent(String sportEventId) {
         SportEvent sportEvent = getSportEvent(sportEventId);
-
         return (sportEvent!=null?sportEvent.getNumSubstitutes():0);
     }
 
@@ -554,14 +525,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public int numWorkersByRole(String roleId) {
         Role role = getRole(roleId);
-
         return (role!=null?role.numWorkers(): 0);
     }
 
     @Override
     public int numWorkersBySportEvent(String sportEventId) {
         SportEvent sportEvent = getSportEvent(sportEventId);
-
         return (sportEvent!=null?sportEvent.numWorkers(): 0);
     }
 
@@ -572,7 +541,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public int numAttenders(String sportEventId) {
-
         if (getSportEvent(sportEventId) == null) {
             return 0;
         } else {
