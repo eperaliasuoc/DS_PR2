@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
-import uoc.ds.pr.util.ResourceUtil;
+//import uoc.ds.pr.util.ResourceUtil;
 
 import static uoc.ds.pr.util.DateUtils.createLocalDate;
 
@@ -124,7 +124,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
     }
 
     @Test
-    public void assignWorkerTest() throws DSException, WorkerAlreadyAssignedException {
+    public void assignWorkerTest() throws DSException {
         // GIVEN:
         initialState();
         //
@@ -139,8 +139,10 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
         sportEvents4Club.assignWorker("DNIW2", "EV-1103");
         sportEvents4Club.assignWorker("DNIW3", "EV-1103");
         sportEvents4Club.assignWorker("DNIW4", "EV-1103");
+
         sportEvents4Club.assignWorker("DNIW5", "EV-1101");
         sportEvents4Club.assignWorker("DNIW6", "EV-1101");
+
 
         Assert.assertThrows(WorkerAlreadyAssignedException.class, () ->
                 sportEvents4Club.assignWorker("DNIW1", "EV-1103"));
@@ -151,7 +153,7 @@ public class SportEvents4ClubPR2Test extends SportEvents4ClubPR1Test {
     }
 
     @Test
-    public void getWorkersBySportEventTest() throws DSException, WorkerAlreadyAssignedException {
+    public void getWorkersBySportEventTest() throws DSException {
 
         // GIVEN:
         initialState();
