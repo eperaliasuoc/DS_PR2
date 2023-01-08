@@ -17,7 +17,7 @@ import static uoc.ds.pr.SportEvents4Club.MAX_NUM_ENROLLMENT;
 
 public class SportEvent implements Comparable<SportEvent> {
     public static final Comparator<SportEvent> CMP_V = (SportEvent se1, SportEvent se2)->Double.compare(se1.rating(), se2.rating());
-    //public static final Comparator<SportEvent> CMP_RATING = (SportEvent s1, SportEvent s2)->Double.compare(s1.getRating(), s2.getRating());
+    //public static final Comparator<SportEvent> CMP_K = (SportEvent s1, SportEvent s2)->Double.compare(s1.ra, s2.getRating());
 
     private String eventId;
     private String description;

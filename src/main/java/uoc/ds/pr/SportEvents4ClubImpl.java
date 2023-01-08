@@ -62,7 +62,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         workers = new HashTable<String, Worker>();
         numWorkers = 0;
         best5OrganizingEntity = new OrderedVector<OrganizingEntity>(MAX_ORGANIZING_ENTITIES_WITH_MORE_ATTENDERS, OrganizingEntity.COMP_ATTENDER);
-        //best10SportEvent = new OrderedVector<SportEvent>(BEST_10_SPORTEVENTS+EXTRA, SportEvent.CMP_V);
+        best10SportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_V);
     }
 
     @Override
@@ -210,8 +210,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     }
 
     private void updateBestSportEvent(SportEvent sportEvent) {
-        bestSportEvent.delete(sportEvent);
+        //bestSportEvent.delete(sportEvent);
         bestSportEvent.update(sportEvent);
+        best10SportEvent.update(sportEvent);
     }
 
 
@@ -369,6 +370,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             throw new LimitExceededException();
         }
         sportEvent.addAttender(phone, name);
+        updateBestSportEvent(sportEvent);
         OrganizingEntity organizingEntity = sportEvent.getOrganizingEntity();
         organizingEntity.incAttenders();
         best5OrganizingEntity.update(organizingEntity);
@@ -404,9 +406,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<OrganizingEntity> best5OrganizingEntities() throws NoAttendersException {
-        System.out.println("OrganizingEntities en best5OrganizingEntity 1 = " + best5OrganizingEntity.elementAt(1).getOrganizationId());
-        System.out.println("OrganizingEntities en best5OrganizingEntity 2 = " + best5OrganizingEntity.elementAt(2).getOrganizationId());
-        System.out.println("OrganizingEntities en best5OrganizingEntity 3 = " + best5OrganizingEntity.elementAt(3).getOrganizationId());
+        //System.out.println("OrganizingEntities en best5OrganizingEntity 1 = " + best5OrganizingEntity.elementAt(1).getOrganizationId());
+        //System.out.println("OrganizingEntities en best5OrganizingEntity 2 = " + best5OrganizingEntity.elementAt(2).getOrganizationId());
+        //System.out.println("OrganizingEntities en best5OrganizingEntity 3 = " + best5OrganizingEntity.elementAt(3).getOrganizationId());
 
         if (best5OrganizingEntity.isEmpty()) {
             throw new NoAttendersException();
@@ -416,7 +418,10 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public SportEvent bestSportEventByAttenders() throws NoSportEventsException {
-        return null;
+        if (best10SportEvent.size() == 0) {
+            throw new NoSportEventsException();
+        }
+        return best10SportEvent.elementAt(0);
     }
 
     @Override

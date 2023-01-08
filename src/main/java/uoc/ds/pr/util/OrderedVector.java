@@ -15,7 +15,6 @@ public class OrderedVector<E> implements FiniteContainer<E> {
 
 
     private Comparator<E> comparator;
-
     private E[] data;
     private int len;
 
@@ -58,25 +57,26 @@ public class OrderedVector<E> implements FiniteContainer<E> {
         }
     }
 
-
     public void update(E vIn) {
         int i = 0;
 
         // Si existe el elemento borramos el elemento para volverlo a insertar en su posición
-        if (isFull()) {
-            E pOut = last();
-            if (comparator.compare(pOut, vIn) < 0) {
-                delete(pOut);
-                update(vIn);
-                return;
-            }
-            else {
+        boolean exist = delete(vIn);
+        if (exist) update(vIn);
+        else {
+            if (isFull()) {
+                E pOut = last();
+                if (comparator.compare(pOut, vIn) < 0) {
+                    delete(pOut);
+                    update(vIn);
+                    return;
+            } else {
                 return;
             }
         }
 
         // hacemos un recorrido para determinar la posición en la que insertar
-        while (i < len && data[i] != null && comparator.compare(data[i], vIn) >= 0) { 
+        while (i < len && data[i] != null && comparator.compare(data[i], vIn) >= 0) {
             i++;
         }
 
@@ -86,10 +86,10 @@ public class OrderedVector<E> implements FiniteContainer<E> {
         // se inserta el elemento en la posición
         data[i] = vIn;
         len++;
-
+        }
     }
 
-    public void delete (E elem) {
+    public boolean delete (E elem) {
         int i = 0;
         boolean found = false;
 
@@ -105,6 +105,7 @@ public class OrderedVector<E> implements FiniteContainer<E> {
             }
             len--;
         }
+        return found;
     }
 
     public Iterator<E> values() {
@@ -125,7 +126,6 @@ public class OrderedVector<E> implements FiniteContainer<E> {
     }
 
     public E last() {
-//        return data[len-1];
         return (len>0?data[len-1]:null);
     }
 }

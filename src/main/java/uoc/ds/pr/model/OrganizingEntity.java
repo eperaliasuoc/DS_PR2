@@ -78,11 +78,11 @@ public class OrganizingEntity implements Comparable<OrganizingEntity>{
 
     public int compareTo(OrganizingEntity org) {
         //int result = this.numAttenders().compareTo(org.numAttenders());
-        int result = Integer.compare(this.numAttenders(), org.numAttenders());
-        System.out.println("Organization1 del compareTo de  = " + this.getOrganizationId());
-        //System.out.println("Organization2 del compareTo de  = " + org.getOrganizationId());
-        System.out.println("Organization1 numAttenders  = " + this.numAttenders);
-        //System.out.println("Organization2 numAttenders  = " + this.numAttenders);
+        int result = Integer.compare(numAttenders(), org.numAttenders());
+        /*System.out.println("Organization1 del compareTo de  = " + this.getOrganizationId());
+        System.out.println("Organization2 del compareTo de  = " + org.getOrganizationId()); */
+        System.out.println("Organization1 numAttenders  = " + this.numAttenders());
+        System.out.println("Organization2 numAttenders  = " + org.numAttenders());
         System.out.println("Resultado del compareTo de Organization = " + result);
 
         return result;
