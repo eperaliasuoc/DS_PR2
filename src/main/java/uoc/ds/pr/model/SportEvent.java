@@ -16,9 +16,10 @@ import java.util.Comparator;
 import static uoc.ds.pr.SportEvents4Club.MAX_NUM_ENROLLMENT;
 
 public class SportEvent implements Comparable<SportEvent> {
-    public static final Comparator<SportEvent> CMP_V = (SportEvent se1, SportEvent se2)->Double.compare(se1.rating(), se2.rating());
-    //public static final Comparator<SportEvent> CMP_K = (SportEvent s1, SportEvent s2)->Double.compare(s1.ra, s2.getRating());
+    //public static final Comparator<SportEvent> CMP_V = (SportEvent se1, SportEvent se2)->se1.compareTo(se2);
 
+    public static final Comparator<SportEvent> CMP_V = (SportEvent se1, SportEvent se2)->Double.compare(se1.rating(), se2.rating());
+    public static final Comparator<String> CMP_K = (k1, k2)-> k1.compareTo(k2);
     private String eventId;
     private String description;
     private SportEvents4Club.Type type;
@@ -122,7 +123,6 @@ public class SportEvent implements Comparable<SportEvent> {
         ratings.insertEnd(newRating);
         sumRatings+=rating.getValue();
         numRatings++;
-        //player.incNumRatings();
     }
 
     public double getRating() {
@@ -160,6 +160,7 @@ public class SportEvent implements Comparable<SportEvent> {
     public Iterator<Enrollment> EnrollmentAsSubstitute() {
         return enrollmentsubs.values();
     }
+
     public int getNumSubstitutes() {
         return numSubstitutes;
     }
@@ -171,6 +172,7 @@ public class SportEvent implements Comparable<SportEvent> {
     @Override
     public int compareTo(SportEvent se2) {
         return Double.compare(rating(), se2.rating() );
+        //return this.getEventId().compareTo(se2.getEventId());
     }
 
     public boolean isFull() {

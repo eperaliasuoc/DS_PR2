@@ -16,7 +16,7 @@ public class Player {
     private int numRatings;
     private int totalRatings;
     SportEvents4Club.Level level;
-    private List<Rating> ratings;
+    //private List<Rating> ratings;
 
 	public Player(String idUser, String name, String surname, LocalDate birthday) {
         this.id = idUser;

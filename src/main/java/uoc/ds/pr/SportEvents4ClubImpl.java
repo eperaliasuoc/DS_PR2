@@ -11,6 +11,7 @@ import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
 import uoc.ds.pr.util.DictionaryOrderedVector;
 import uoc.ds.pr.util.OrderedVector;
+import edu.uoc.ds.adt.nonlinear.graphs.*;
 
 
 public class SportEvents4ClubImpl implements SportEvents4Club {
@@ -31,6 +32,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     private int numWorkers;
     private OrderedVector<OrganizingEntity> best5OrganizingEntity;
     private OrderedVector<SportEvent> best10SportEvent;
+    private DirectedGraph<Player, String> graph;
 
     public SportEvents4ClubImpl() {
         players = new DictionaryAVLImpl<String, Player>();
@@ -49,6 +51,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         numWorkers = 0;
         best5OrganizingEntity = new OrderedVector<OrganizingEntity>(MAX_ORGANIZING_ENTITIES_WITH_MORE_ATTENDERS, OrganizingEntity.COMP_ATTENDER);
         best10SportEvent = new OrderedVector<SportEvent>(MAX_NUM_SPORT_EVENTS, SportEvent.CMP_V);
+        graph = new DirectedGraphImpl<Player, String>();
+
     }
 
     @Override
@@ -195,7 +199,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     private void updateBestSportEvent(SportEvent sportEvent) {
         bestSportEvent.update(sportEvent);
-        best10SportEvent.update(sportEvent);
+        //best10SportEvent.update(sportEvent);
     }
 
 
@@ -392,15 +396,53 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public SportEvent bestSportEventByAttenders() throws NoSportEventsException {
-        if (best10SportEvent.size() == 0) {
+        if (bestSportEvent.size() == 0) {
             throw new NoSportEventsException();
         }
-        return best10SportEvent.elementAt(0);
+        return bestSportEvent.elementAt(0);
     }
 
     @Override
     public void addFollower(String playerId, String playerFollowerId) throws PlayerNotFoundException {
 
+        Player follower = getPlayer(playerId);
+        Player followed = getPlayer(playerFollowerId);
+        if ((follower == null) && (followed == null)) {
+            throw new PlayerNotFoundException();
+        }
+
+        Vertex<Player> vfollower = graph.newVertex(follower);
+        Vertex<Player> vfollowed = graph.newVertex(followed);
+
+        Edge<String, Player> edge1a = graph.newEdge(vfollowed, vfollower);
+        edge1a.setLabel("follower");
+        Edge<String, Player> edge1b = graph.newEdge(vfollower, vfollowed);
+        edge1b.setLabel("followed");
+
+    }
+
+    @Override
+    public int numFollowers(String playerId) {
+        int numFollowers = 0;
+        DirectedVertexImpl<Player, String> _vFollowers = (DirectedVertexImpl<Player, String>) graph.getVertex(getPlayer(playerId));
+
+        Iterator<Edge<String, Player>> it = _vFollowers.edges();
+        DirectedEdge<String, Player>  _edge1a = (DirectedEdge<String, Player>)it.next();
+        System.out.println("Follower Name antes del while= " + _edge1a.getVertexSrc().getValue().getName());
+        System.out.println("Followed Name antes del while= " + _edge1a.getVertexDst().getValue().getName());
+        while (it.hasNext()) {
+            DirectedEdge<String, Player> _edge1b = (DirectedEdge<String, Player>)it.next();
+            System.out.println("Follower Name= " + _edge1a.getVertexSrc().getValue().getName());
+            System.out.println("Followed Name= " + _edge1b.getVertexDst().getValue().getName());
+            numFollowers++;
+        }
+        System.out.println("numFollowers = " + numFollowers);
+        return numFollowers;
+    }
+
+    @Override
+    public int numFollowings(String playerId) {
+        return 0;
     }
 
     @Override
@@ -548,15 +590,5 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             Integer numAttenders = getSportEvent(sportEventId).numAttenders();
             return numAttenders;
         }
-    }
-
-    @Override
-    public int numFollowers(String playerId) {
-        return 0;
-    }
-
-    @Override
-    public int numFollowings(String playerId) {
-        return 0;
     }
 }
