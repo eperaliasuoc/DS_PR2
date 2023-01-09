@@ -269,6 +269,10 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public void assignWorker(String dni, String eventId) throws WorkerNotFoundException, WorkerAlreadyAssignedException, SportEventNotFoundException {
         SportEvent sportEvent = getSportEvent(eventId);
+        if (sportEvent == null) {
+            throw new SportEventNotFoundException();
+        }
+
         Worker worker = getWorker(dni);
         if (worker == null) {
             throw new WorkerNotFoundException();
@@ -276,9 +280,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         if (sportEvent.isInSportEvent(dni)) {
             throw new WorkerAlreadyAssignedException();
         }
-        if (sportEvent == null) {
-            throw new SportEventNotFoundException();
-        }
+
         worker.setSportEvent(sportEvent);
         sportEvent.addWorker(worker);
     }
