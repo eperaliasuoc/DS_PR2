@@ -90,14 +90,12 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
         Assert.assertThrows(PlayerNotFoundException.class, () ->
                 sportEvents4Club.addFollower("playerId1", "playerXXXXXX"));
 
-
         Assert.assertEquals(4, sportEvents4Club.numFollowers("idPlayer1"));
-        //Assert.assertEquals(1, sportEvents4Club.numFollowings("idPlayer10"));
+        Assert.assertEquals(1, sportEvents4Club.numFollowings("idPlayer10"));
 
-        //sportEvents4Club.addFollower("idPlayer1", "idPlayer10");
-        //Assert.assertEquals(5, sportEvents4Club.numFollowers("idPlayer1"));
-        //Assert.assertEquals(2, sportEvents4Club.numFollowings("idPlayer10"));
-
+        sportEvents4Club.addFollower("idPlayer1", "idPlayer10");
+        Assert.assertEquals(5, sportEvents4Club.numFollowers("idPlayer1"));
+        Assert.assertEquals(2, sportEvents4Club.numFollowings("idPlayer10"));
 
     }
 
