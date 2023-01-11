@@ -401,7 +401,6 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public void addFollower(String playerId, String playerFollowerId) throws PlayerNotFoundException {
-
         Player follower = getPlayer(playerId);
         Player followed = getPlayer(playerFollowerId);
         if ((follower == null) || (followed == null)) {
@@ -412,9 +411,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             DirectedEdge<String, Player> edge = graph.newEdge(vFollower, vFollowed);
             numEdges++;
             edge.setLabel("follower");
-            System.out.println("Nombre del follower 1 elseif= " + graph.getVertex(follower).getValue().getName());
+            /*System.out.println("Nombre del follower 1 elseif= " + graph.getVertex(follower).getValue().getName());
             System.out.println("Nombre del followed 1 elseif= " + graph.getVertex(followed).getValue().getName());
-            System.out.println("Dentro del 1 elseif");
+            System.out.println("Dentro del 1 elseif");*/
         } else if ((graph.getVertex(follower) != null) /*|| (graph.getVertex(followed) == null)*/) {
             Vertex<Player> vFollower = graph.getVertex(follower);
             Vertex<Player> vFollowed = null;
@@ -426,9 +425,9 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             DirectedEdge<String, Player> edge = graph.newEdge(vFollower, vFollowed);
             numEdges++;
             edge.setLabel("follower");
-            System.out.println("Nombre del follower 2 elseif= " + graph.getVertex(follower).getValue().getName());
+            /*System.out.println("Nombre del follower 2 elseif= " + graph.getVertex(follower).getValue().getName());
             System.out.println("Nombre del followed 2 elseif= " + graph.getVertex(followed).getValue().getName());
-            System.out.println("Dentro del 2 else-if");
+            System.out.println("Dentro del 2 else-if");*/
 
         } /*else if ((graph.getVertex(follower) != null) && (graph.getVertex(followed) != null)) {
             Vertex<Player> vFollower = graph.getVertex(follower);
@@ -441,13 +440,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
             System.out.println("Dentro del 3 else-if");
 
         }*/
-        System.out.println("Numero de vertices en graph en addFollower= " + graph.numVertexs());
-        System.out.println("Numero de aristas en graph en addFollower= " + numEdges);
+        //System.out.println("Numero de vertices en graph en addFollower= " + graph.numVertexs());
+        //System.out.println("Numero de aristas en graph en addFollower= " + numEdges);
     }
 
     @Override
     public int numFollowers(String playerId) {
-
         int numFollowers = 0;
         Vertex<Player> vFollower = graph.getVertex(getPlayer(playerId));
         Iterator<Edge<String, Player>> it = graph.edgesWithSource(vFollower);
@@ -475,17 +473,44 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     @Override
     public Iterator<Player> getFollowers(String playerId) throws PlayerNotFoundException, NoFollowersException {
         Player followerid = getPlayer(playerId);
-        //Player followed = getPlayer(playerFollowerId);
         if (followerid == null) {
             throw new PlayerNotFoundException();
         }
+        //Vertex<Player> vFollower = graph.getVertex(followerid);
+        DirectedVertexImpl vFollower = (DirectedVertexImpl) graph.getVertex(followerid);
+        Iterator<Player> itEdges = vFollower.edges();
 
-        if (graph.numVertexs() == 0) {
+        if (!itEdges.hasNext()) {
             throw new NoFollowersException();
         }
 
+        /*DirectedEdge<String, Player> _edge = (DirectedEdge<String, Player>)itEdges.next();
+        Iterator<Player> itfollowed = null;
+        while (itEdges != null && _edge.getVertexSrc().getValue().getId() == followerid.getId()) {
+            System.out.println("Valor del Vertice Origen en el while= " +  _edge.getVertexSrc().getValue().getId());
+            System.out.println("Valor de edge1 antes del if en el while= " +  _edge.getVertexDst().getValue().getId());
+            if (_edge.getVertexSrc().getValue().getId() != _edge.getVertexDst().getValue().getId()) {
+                //System.out.println("Valor de edge1 en el if en el while= " +  _edge.getVertexDst().getValue().getId());
+                _edge = (DirectedEdge)itEdges.next();
+            }
+            itfollowed =  itEdges;
+        }*/
+        /*System.out.println("Valor del Vertice Origen= " +  _edge.getVertexSrc().getValue().getId());
+        System.out.println("Valor de edge1= " +  _edge.getVertexDst().getValue().getId());
+        _edge = (DirectedEdge<String, Player>)itEdges.next();
+        System.out.println("Valor de edge2= " +  _edge.getVertexDst().getValue().getId());
+        _edge = (DirectedEdge<String, Player>)itEdges.next();
+        System.out.println("Valor de edge3= " +  _edge.getVertexDst().getValue().getId());
+        _edge = (DirectedEdge<String, Player>)itEdges.next();
+        System.out.println("Valor de edge4= " +  _edge.getVertexDst().getValue().getId());
+        _edge = (DirectedEdge<String, Player>)itEdges.next();
+        System.out.println("Valor de edge5= " +  _edge.getVertexDst().getValue().getId());
+        _edge = (DirectedEdge<String, Player>)itEdges.next();
+        System.out.println("Valor de edge6= " +  _edge.getVertexDst().getValue().getId());
+        _edge = (DirectedEdge<String, Player>)itEdges.next();
+        System.out.println("Valor de edge7= " +  _edge.getVertexDst().getValue().getId());*/
 
-        return (Iterator<Player>) graph.getVertex(followerid);
+        return itEdges;
     }
 
     @Override

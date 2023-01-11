@@ -99,7 +99,7 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
 
     }
 
-    /*
+    /**
      * followers(1): {2, 3, 4, 5}
      * followers(2): {1, 3, 6, 7}
      * followers(3): {1, 2, 4, 5}
@@ -116,12 +116,13 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(11): {5}
      */
 
-    /*
+/*
     @Test
     public void getFollowersTest() throws DSException {
         initialState();
 
         Iterator<Player> it = sportEvents4Club.getFollowers("idPlayer1");
+        System.out.println("Valor de it= " + it.next().getId());
         Assert.assertEquals("idPlayer2", it.next().getId());
         Assert.assertEquals("idPlayer3", it.next().getId());
         Assert.assertEquals("idPlayer4", it.next().getId());
@@ -144,7 +145,7 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
 
         Assert.assertThrows(NoFollowersException.class, () ->
                 sportEvents4Club.getFollowers("idPlayer10"));
-    }
+    }*/
 
     /**
      *

@@ -6,9 +6,6 @@ import uoc.ds.pr.model.Player;
 public class LevelHelper {
     public static SportEvents4Club.Level getLevel(Integer rating) {
         SportEvents4Club.Level level = null;
-        Player player = null;
-       // player.setId(playerId);
-//        player.setId(String.valueOf(playerId));
 
         if (rating >= 15) {
             level = SportEvents4Club.Level.LEGEND;
