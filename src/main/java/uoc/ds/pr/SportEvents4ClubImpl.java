@@ -1,15 +1,11 @@
 package uoc.ds.pr;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Hashtable;
 
 import edu.uoc.ds.adt.nonlinear.*;
-import edu.uoc.ds.adt.sequential.*;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
-import uoc.ds.pr.util.DictionaryOrderedVector;
 import uoc.ds.pr.util.OrderedVector;
 import edu.uoc.ds.adt.nonlinear.graphs.*;
 
@@ -454,18 +450,12 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
         int numFollowers = 0;
         Vertex<Player> vFollower = graph.getVertex(getPlayer(playerId));
-        Iterator<Vertex<Player>> it = graph.adjacencyList(vFollower);
-        /*System.out.println("Valor del 1 it numFollowers= " + it.next().getValue().getName());
-        System.out.println("Valor del 2 it numFollowers= " + it.next().getValue().getName());
-        System.out.println("Valor del 3 it numFollowers= " + it.next().getValue().getName());
-        System.out.println("Valor del 4 it numFollowers= " + it.next().getValue().getName());
-        System.out.println("Valor del 5 it numFollowers= " + it.next().getValue().getName());
-        System.out.println("Valor del 6 it numFollowers= " + it.next().getValue().getName());*/
+        Iterator<Edge<String, Player>> it = graph.edgesWithSource(vFollower);
 
-       while(it.hasNext()) {
+        while (it.hasNext()) {
            it.next();
            numFollowers++;
-       }
+        }
        return numFollowers;
     }
 
@@ -473,12 +463,8 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
     public int numFollowings(String playerId) {
         int numFollowings = 0;
         Vertex<Player> vFollowed = graph.getVertex(getPlayer(playerId));
-        Iterator<Vertex<Player>> it = graph.adjacencyList(vFollowed);
-        //System.out.println("Valor del primer it numFollowings= " + it.next().getValue().getName());
-        //System.out.println("Valor del segundo it numFollowings= " + it.next().getValue().getName());
-        /*System.out.println("Valor del tercer it numFollowers= " + it.next().getValue().getName());
-        System.out.println("Valor del cuarto it numFollowers= " + it.next().getValue().getName());*/
-        //System.out.println("Valor del 5 it numFollowers= " + it.next().getValue().getName());
+        Iterator<Edge<String, Player>> it = graph.edgedWithDestA(vFollowed);
+
         while(it.hasNext()) {
             it.next();
             numFollowings++;
