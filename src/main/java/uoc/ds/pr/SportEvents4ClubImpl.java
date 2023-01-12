@@ -1,6 +1,8 @@
 package uoc.ds.pr;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import edu.uoc.ds.adt.nonlinear.*;
 import edu.uoc.ds.traversal.Iterator;
@@ -472,45 +474,27 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<Player> getFollowers(String playerId) throws PlayerNotFoundException, NoFollowersException {
+        List<Player> followers  = new LinkedList<Player>();;
         Player followerid = getPlayer(playerId);
         if (followerid == null) {
             throw new PlayerNotFoundException();
         }
         //Vertex<Player> vFollower = graph.getVertex(followerid);
         DirectedVertexImpl vFollower = (DirectedVertexImpl) graph.getVertex(followerid);
-        Iterator<Player> itEdges = vFollower.edges();
+        Iterator<Edge> itEdges = vFollower.edges();
 
         if (!itEdges.hasNext()) {
             throw new NoFollowersException();
         }
 
-        /*DirectedEdge<String, Player> _edge = (DirectedEdge<String, Player>)itEdges.next();
-        Iterator<Player> itfollowed = null;
-        while (itEdges != null && _edge.getVertexSrc().getValue().getId() == followerid.getId()) {
-            System.out.println("Valor del Vertice Origen en el while= " +  _edge.getVertexSrc().getValue().getId());
-            System.out.println("Valor de edge1 antes del if en el while= " +  _edge.getVertexDst().getValue().getId());
-            if (_edge.getVertexSrc().getValue().getId() != _edge.getVertexDst().getValue().getId()) {
-                //System.out.println("Valor de edge1 en el if en el while= " +  _edge.getVertexDst().getValue().getId());
-                _edge = (DirectedEdge)itEdges.next();
-            }
-            itfollowed =  itEdges;
-        }*/
-        /*System.out.println("Valor del Vertice Origen= " +  _edge.getVertexSrc().getValue().getId());
-        System.out.println("Valor de edge1= " +  _edge.getVertexDst().getValue().getId());
-        _edge = (DirectedEdge<String, Player>)itEdges.next();
-        System.out.println("Valor de edge2= " +  _edge.getVertexDst().getValue().getId());
-        _edge = (DirectedEdge<String, Player>)itEdges.next();
-        System.out.println("Valor de edge3= " +  _edge.getVertexDst().getValue().getId());
-        _edge = (DirectedEdge<String, Player>)itEdges.next();
-        System.out.println("Valor de edge4= " +  _edge.getVertexDst().getValue().getId());
-        _edge = (DirectedEdge<String, Player>)itEdges.next();
-        System.out.println("Valor de edge5= " +  _edge.getVertexDst().getValue().getId());
-        _edge = (DirectedEdge<String, Player>)itEdges.next();
-        System.out.println("Valor de edge6= " +  _edge.getVertexDst().getValue().getId());
-        _edge = (DirectedEdge<String, Player>)itEdges.next();
-        System.out.println("Valor de edge7= " +  _edge.getVertexDst().getValue().getId());*/
+        DirectedEdge<String, Player> _edge = (DirectedEdge<String, Player>)itEdges.next();
 
-        return itEdges;
+        while (itEdges.hasNext() /*&& _edge.getVertexSrc().getValue().getId() == followerid.getId()*/) {
+                _edge = (DirectedEdge<String, Player>)itEdges.next();
+                followers.add(_edge.getVertexSrc().getValue());
+        }
+
+        return followers.listIterator();
     }
 
     @Override

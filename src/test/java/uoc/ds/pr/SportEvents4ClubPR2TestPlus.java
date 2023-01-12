@@ -116,7 +116,6 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(11): {5}
      */
 
-/*
     @Test
     public void getFollowersTest() throws DSException {
         initialState();
@@ -145,7 +144,7 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
 
         Assert.assertThrows(NoFollowersException.class, () ->
                 sportEvents4Club.getFollowers("idPlayer10"));
-    }*/
+    }
 
     /**
      *
