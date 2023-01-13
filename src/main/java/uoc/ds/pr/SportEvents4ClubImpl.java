@@ -3,8 +3,10 @@ package uoc.ds.pr;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import edu.uoc.ds.adt.nonlinear.*;
+import edu.uoc.ds.adt.sequential.QueueArrayImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
@@ -474,27 +476,27 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<Player> getFollowers(String playerId) throws PlayerNotFoundException, NoFollowersException {
-        List<Player> followers  = new LinkedList<Player>();;
-        Player followerid = getPlayer(playerId);
-        if (followerid == null) {
+        //LinkedList<Player> followers  = new LinkedList<Player>();
+        QueueArrayImpl<Player> followers = new QueueArrayImpl<Player>();
+        Player follower = getPlayer(playerId);
+        if (follower == null) {
             throw new PlayerNotFoundException();
         }
-        //Vertex<Player> vFollower = graph.getVertex(followerid);
-        DirectedVertexImpl vFollower = (DirectedVertexImpl) graph.getVertex(followerid);
-        Iterator<Edge> itEdges = vFollower.edges();
 
+        DirectedVertexImpl vFollower = (DirectedVertexImpl) graph.getVertex(follower);
+        Iterator<Edge> itEdges = vFollower.edges();
+        DirectedEdge<String, Player> _edge = (DirectedEdge<String, Player>)itEdges.next();
         if (!itEdges.hasNext()) {
             throw new NoFollowersException();
         }
 
-        DirectedEdge<String, Player> _edge = (DirectedEdge<String, Player>)itEdges.next();
-
-        while (itEdges.hasNext() /*&& _edge.getVertexSrc().getValue().getId() == followerid.getId()*/) {
-                _edge = (DirectedEdge<String, Player>)itEdges.next();
-                followers.add(_edge.getVertexSrc().getValue());
+        while (itEdges.hasNext()) {
+            followers.add(_edge.getVertexDst().getValue());
+            _edge = (DirectedEdge<String, Player>)itEdges.next();
         }
+        Iterator<Player> itPlayers = followers.values();
 
-        return followers.listIterator();
+        return itPlayers;
     }
 
     @Override
