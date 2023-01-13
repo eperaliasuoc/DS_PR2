@@ -164,7 +164,6 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(11): {5}
      */
 
-    /*
     @Test
     public void getFollowingsTest() throws DSException {
         initialState();

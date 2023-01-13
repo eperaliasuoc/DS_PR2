@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import edu.uoc.ds.adt.nonlinear.*;
 import edu.uoc.ds.adt.sequential.QueueArrayImpl;
+import edu.uoc.ds.adt.sequential.SetLinkedListImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
@@ -476,7 +478,7 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<Player> getFollowers(String playerId) throws PlayerNotFoundException, NoFollowersException {
-        //LinkedList<Player> followers  = new LinkedList<Player>();
+        //SetLinkedListImpl<Player> followers = new SetLinkedListImpl<Player>();
         QueueArrayImpl<Player> followers = new QueueArrayImpl<Player>();
         Player follower = getPlayer(playerId);
         if (follower == null) {
@@ -485,23 +487,65 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
         DirectedVertexImpl vFollower = (DirectedVertexImpl) graph.getVertex(follower);
         Iterator<Edge> itEdges = vFollower.edges();
-        DirectedEdge<String, Player> _edge = (DirectedEdge<String, Player>)itEdges.next();
+        DirectedEdge<String, Player> edge = (DirectedEdge<String, Player>)itEdges.next();
         if (!itEdges.hasNext()) {
             throw new NoFollowersException();
         }
 
         while (itEdges.hasNext()) {
-            followers.add(_edge.getVertexDst().getValue());
-            _edge = (DirectedEdge<String, Player>)itEdges.next();
+            if (edge.getVertexSrc().getValue().getId().equals(playerId)) {
+                followers.add(edge.getVertexDst().getValue());
+            }
+            edge = (DirectedEdge<String, Player>)itEdges.next();
         }
-        Iterator<Player> itPlayers = followers.values();
 
-        return itPlayers;
+        return followers.values();
     }
 
     @Override
     public Iterator<Player> getFollowings(String playerId) throws PlayerNotFoundException, NoFollowingException {
-        return null;
+        SetLinkedListImpl<Player> followeds = new SetLinkedListImpl<Player>();
+        Player followed = getPlayer(playerId);
+        if (followed == null) {
+            throw new PlayerNotFoundException();
+        }
+
+        DirectedVertexImpl vFollowed = (DirectedVertexImpl) graph.getVertex(followed);
+
+        if (vFollowed == null) {
+            throw new NoFollowingException();
+        }
+
+        Iterator<Edge> itEdges = vFollowed.edges();
+        DirectedEdge<String, Player> edge = (DirectedEdge<String, Player>)itEdges.next();
+        while (itEdges.hasNext()) {
+            //System.out.println("Valor de followed= " + ((DirectedEdge<?, ?>) itEdges.next()).getVertexDst().getValue());
+            //System.out.println("Valor de follower= " + ((DirectedEdge<?, ?>) itEdges.next()).getVertexSrc().getValue());
+            //if (!itEdges.equals(followed)) {
+            //    followeds.add(((DirectedEdge<String, Player>) itEdges.next()).getVertexDst().getValue());
+            //}
+
+            if (edge.getVertexSrc().getValue().getId().equals(playerId)) {
+                followeds.add(edge.getVertexDst().getValue());
+                //System.out.println("Valor de followed= " + edge.getVertexSrc());
+                //System.out.println("Valor de follower= " + edge.getVertexDst());
+            }
+
+            /*if (edge.getVertexSrc().getValue().getId().equals(playerId)) {
+                    //followeds.add(edge.getVertexDst().getValue());
+
+                followeds.add(((DirectedEdge<String, Player>) itEdges.next()).getVertexDst().getValue());
+                }*/
+            System.out.println("Valor de getEdge= " + graph.getEdge(graph.getVertex(followed), edge.getVertexSrc()));
+
+            edge = (DirectedEdge<String, Player>)itEdges.next();
+            //itEdges.next();
+            //System.out.println("Valor de followed= " + edge.getVertexSrc().getValue().getId());
+            //System.out.println("Valor de follower= " + edge.getVertexDst().getValue().getId());
+        }
+        System.out.println("Numero de follower en followed= " + followeds.size());
+
+        return followeds.values();
     }
 
     @Override
