@@ -504,52 +504,42 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<Player> getFollowings(String playerId) throws PlayerNotFoundException, NoFollowingException {
-        SetLinkedListImpl<Player> followeds = new SetLinkedListImpl<Player>();
+        QueueArrayImpl<Player> followeds = new QueueArrayImpl<Player>();
         Player followed = getPlayer(playerId);
         if (followed == null) {
             throw new PlayerNotFoundException();
         }
 
         DirectedVertexImpl vFollowed = (DirectedVertexImpl) graph.getVertex(followed);
-
         if (vFollowed == null) {
             throw new NoFollowingException();
         }
 
         Iterator<Edge> itEdges = vFollowed.edges();
-        DirectedEdge<String, Player> edge = (DirectedEdge<String, Player>)itEdges.next();
+
         while (itEdges.hasNext()) {
-            //System.out.println("Valor de followed= " + ((DirectedEdge<?, ?>) itEdges.next()).getVertexDst().getValue());
-            //System.out.println("Valor de follower= " + ((DirectedEdge<?, ?>) itEdges.next()).getVertexSrc().getValue());
-            //if (!itEdges.equals(followed)) {
-            //    followeds.add(((DirectedEdge<String, Player>) itEdges.next()).getVertexDst().getValue());
-            //}
-
-            if (edge.getVertexSrc().getValue().getId().equals(playerId)) {
-                followeds.add(edge.getVertexDst().getValue());
-                //System.out.println("Valor de followed= " + edge.getVertexSrc());
-                //System.out.println("Valor de follower= " + edge.getVertexDst());
+            DirectedEdge<String, Player> edge = (DirectedEdge<String, Player>)itEdges.next();
+            if (edge.getVertexDst().getValue().getId().equals(playerId)) {
+                followeds.add(edge.getVertexSrc().getValue());
             }
-
-            /*if (edge.getVertexSrc().getValue().getId().equals(playerId)) {
-                    //followeds.add(edge.getVertexDst().getValue());
-
-                followeds.add(((DirectedEdge<String, Player>) itEdges.next()).getVertexDst().getValue());
-                }*/
-            System.out.println("Valor de getEdge= " + graph.getEdge(graph.getVertex(followed), edge.getVertexSrc()));
-
-            edge = (DirectedEdge<String, Player>)itEdges.next();
-            //itEdges.next();
-            //System.out.println("Valor de followed= " + edge.getVertexSrc().getValue().getId());
-            //System.out.println("Valor de follower= " + edge.getVertexDst().getValue().getId());
         }
-        System.out.println("Numero de follower en followed= " + followeds.size());
 
         return followeds.values();
     }
 
     @Override
     public Iterator<Player> recommendations(String playerId) throws PlayerNotFoundException, NoFollowersException {
+        Player follower = getPlayer(playerId);
+        if (follower == null) {
+            throw new PlayerNotFoundException();
+        }
+
+        DirectedVertexImpl vFollowed = (DirectedVertexImpl) graph.getVertex(follower);
+        if (vFollowed == null) {
+            throw new NoFollowersException();
+        }
+
+
         return null;
     }
 
