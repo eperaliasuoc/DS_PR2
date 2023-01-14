@@ -529,18 +529,36 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<Player> recommendations(String playerId) throws PlayerNotFoundException, NoFollowersException {
+        QueueArrayImpl<Player> followeds = new QueueArrayImpl<Player>();
         Player follower = getPlayer(playerId);
         if (follower == null) {
             throw new PlayerNotFoundException();
         }
 
         DirectedVertexImpl vFollowed = (DirectedVertexImpl) graph.getVertex(follower);
+        Integer vAll = graph.numVertexs();
+        System.out.println("Valor denumVertexs= " + vAll);
+
         if (vFollowed == null) {
             throw new NoFollowersException();
         }
+        System.out.println("Valor del vFollowed antes del while= " + vFollowed.getValue());
 
+        Iterator<Edge> itEdges = vFollowed.edges();
+        while (itEdges.hasNext()) {
+            DirectedEdge<String, Player> edge = (DirectedEdge<String, Player>)itEdges.next();
+            System.out.println("Valor del getVertexSrc antes del if= " + edge.getVertexSrc().getValue());
+            System.out.println("Valor del getVertexDst antes del if= " + edge.getVertexDst().getValue().getId());
+            //System.out.println("Valor del itEdges getVertexSrc antes del if= " + ((DirectedEdge<?, ?>) itEdges.next()).getVertexSrc().getValue());
+            //System.out.println("Valor del itEdges getVertexDst antes del if= " + ((DirectedEdge<?, ?>) itEdges.next()).getVertexDst().getValue());
 
-        return null;
+            if ((!edge.getVertexDst().getValue().getId().equals(playerId)) && (edge.getVertexSrc().getValue().getId().equals(playerId))) {
+                followeds.add(edge.getVertexDst().getValue());
+                System.out.println("Valor del getVertexSrc en el if= " + edge.getVertexSrc().getValue().getId());
+                System.out.println("Valor del getVertexDst en el if= " + edge.getVertexDst().getValue().getId());
+            }
+        }
+        return followeds.values();
     }
 
     @Override
