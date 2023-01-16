@@ -545,28 +545,37 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
         Iterator<Edge> itEdges = vFollowed.edges();
         while (itEdges.hasNext()) {
             DirectedEdge<String, Player> edge = (DirectedEdge<String, Player>) itEdges.next();
-            //followeds.add(edge.getVertexDst().getValue());
             System.out.println("Valor del edge.getVertexSrc en 1 WHILE= " + edge.getVertexSrc().getValue().getId());
             System.out.println("Valor del edge.getVertexDst en 1 WHILE= " + edge.getVertexDst().getValue().getId());
-                DirectedVertexImpl vFollowed1 = (DirectedVertexImpl) graph.getVertex(edge.getVertexDst().getValue());
-                Iterator<Edge> itEdges1 = vFollowed1.edges();
-                while (itEdges1.hasNext()) {
-                    DirectedEdge<String, Player> edge1 = (DirectedEdge<String, Player>) itEdges1.next();
-                    if (edge.getVertexDst()== edge1.getVertexSrc()){
-                        System.out.println("Valor del edge1.getVertexSrc del siguiente vertice en el 2 WHILE= " + edge1.getVertexSrc().getValue().getId());
-                        System.out.println("Valor del edge1.getVertexDst del siguiente vertice en el 2 WHILE= " + edge1.getVertexDst().getValue().getId());
-                    }
+            followeds.add(edge.getVertexDst().getValue());
+            System.out.println("1 Valor AÑADIDO de la lista en el 2 WHILE= " + edge.getVertexDst().getValue().getId());
+            if (edge.getVertexSrc().getValue().getId().equals(playerId)) {
 
-                    //if ((edge.getVertexSrc().getValue() == edge1.getVertexDst().getValue()) || (edge.getVertexSrc().getValue() == edge1.getVertexDst().getValue())) {
-                      //  System.out.println("Valor del edge1.getVertexDst que se añade a la lista= " + edge1.getVertexDst().getValue().getId());
-                        //Player player = followeds.values().next();
-                        //System.out.println("Valor de la lista actual= " + player.getId());
-                    //}
+            DirectedVertexImpl vFollowed1 = (DirectedVertexImpl) graph.getVertex(edge.getVertexDst().getValue());
+            Iterator<Edge> itEdges1 = vFollowed1.edges();
+            //if (vFollowed1 != null) {
+                while (itEdges1.hasNext()&&vFollowed1 != null) {
+                    DirectedEdge<String, Player> edge1 = (DirectedEdge<String, Player>) itEdges1.next();
+                    if (edge.getVertexDst().getValue().equals(edge1.getVertexSrc().getValue())&&(!edge.getVertexSrc().getValue().equals(edge1.getVertexDst().getValue()))) {
+                        //System.out.println("Valor del edge1.getVertexSrc del siguiente vertice en el 2 WHILE= " + edge1.getVertexSrc().getValue().getId());
+                        //System.out.println("Valor del edge1.getVertexDst añadido a lista en el 2 WHILE= " + edge1.getVertexDst().getValue().getId());
+                           //followeds.add(edge1.getVertexDst().getValue());
+                           //while (followeds.values().hasNext()) {
+                              if (followeds.contains(edge.getVertexDst().getValue())) {
+                                   followeds.delete(edge.getVertexDst().getValue());
+                                   System.out.println("Valor BORRADO de la lista en el 2 WHILE= " + edge.getVertexDst().getValue().getId());
+                                   //followeds.add(edge1.getVertexDst().getValue());
+                               } else {
+                                  followeds.add(edge1.getVertexDst().getValue());
+                                  System.out.println("2º Valor AÑADIDO de la lista en el 2 WHILE= " + edge1.getVertexDst().getValue().getId());
+                              }
+                               //followeds.
+                           //}
+                    }
                 }
+            }
         }
         System.out.println("tamaño del followeds= " + followeds.size());
-
-
         return followeds.values();
     }
 
