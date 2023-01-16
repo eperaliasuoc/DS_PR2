@@ -282,7 +282,7 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
      * followings(11): {5}
      */
 
-    /*
+
     @Test
     public void getPostsTest() throws DSException {
         initialState();
@@ -313,6 +313,6 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
                 it.next().message());
         Assert.assertEquals("{'player': 'idPlayer3', 'sportEvent': 'EV-1101', 'rating': 'FOUR', 'action': 'rating'}",
                 it.next().message());
-    }*/
+    }
 
 }
