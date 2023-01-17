@@ -297,8 +297,6 @@ public class SportEvents4ClubPR2TestPlus extends SportEvents4ClubPR2Test {
 
         Iterator<Post> it = sportEvents4Club.getPosts("idPlayer1");
 
-
-
         Assert.assertEquals("{'player': 'idPlayer2', 'sportEvent': 'EV-1103', 'action': 'signup'}",
                 it.next().message());
         Assert.assertEquals("{'player': 'idPlayer2', 'sportEvent': 'EV-1101', 'action': 'signup'}",
