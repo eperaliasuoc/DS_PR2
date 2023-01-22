@@ -551,18 +551,42 @@ public class SportEvents4ClubImpl implements SportEvents4Club {
 
     @Override
     public Iterator<Post> getPosts(String playerId) throws PlayerNotFoundException, NoPostsException {
+        QueueArrayImpl<Player> followeds = new QueueArrayImpl<Player>();
         Player follower = getPlayer(playerId);
         if (follower == null) {
             throw new PlayerNotFoundException();
         }
+
         DirectedVertexImpl vFollowed = (DirectedVertexImpl) graph.getVertex(follower);
-        Integer vAll = graph.numVertexs();
-
-
         if (vFollowed == null) {
             throw new NoPostsException();
         }
 
+        Iterator<Edge> itEdges = vFollowed.edges();
+
+        while (itEdges.hasNext()) {
+            DirectedEdge<String, Player> edge = (DirectedEdge<String, Player>)itEdges.next();
+            //if (edge.getVertexDst().getValue().getId().equals(playerId)) {
+                //edge.getVertexDst(Iterator<SportEvent> itevents = follower.getEvents();
+            Iterator<SportEvent> itevents = edge.getVertexDst().getValue().getEvents();
+            //System.out.println("Numero de enventos "+ edge.getVertexDst().getValue().getEvents());
+            Integer numEvents= 0;
+            while (itevents.hasNext()) {
+                System.out.println("Eventos del playerId= " + itevents.next().getEventId());
+                System.out.println("playerId= " + edge.getVertexDst().getValue().getId());
+
+
+                itevents.next();
+                System.out.println("Numero de eventos "+ numEvents);
+                numEvents++;
+                //followeds.add(edge.getVertexSrc().getValue());
+            }
+
+        }
+
+
+
+        //follower.isInSportEvent();
         return null;
     }
 
